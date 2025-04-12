@@ -1,0 +1,36 @@
+{% extends 'homepage.html'%}
+{% block content %}
+<body>
+    <div class="login-container">
+        <h2>Login to Your Account</h2>
+        <p>Access your Stock Management System account.</p>
+        <form action="{% url 'auth_view' %}" method="POST">
+            {% csrf_token %}
+            <div class="input-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="role">Role</label>
+                <select id="role" name="role">
+                    <option value="Admin">Admin</option>
+                    <option value="Gestionnaire de stock">Gestionnaire de stock</option>
+                    <option value="Employe">Employe</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            
+            <button type="submit">Login</button>
+            <div class="extra-links">
+                {% comment %} <a href="#">Forgot Password?</a> {% endcomment %}
+                {% comment %} <a href="{% url 'signuppage_view' %}">Create an Account</a> {% endcomment %}
+            </div>
+        </form>
+    </div>
+</body>
+{% endblock content %}

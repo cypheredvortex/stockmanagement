@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rapports - Stock Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
+
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f3f4f6;
+            color: #333;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #1f2937;
+            padding: 30px;
+            position: fixed;
+            left: 0;
+            top: 0;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid #3b4c61;
+        }
+
+        .sidebar h2 {
+            color: #f9fafb;
+            text-align: center;
+            font-size: 2.2em;
+            font-weight: 500;
+            margin-bottom: 40px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            padding: 16px 18px;
+            border-radius: 8px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .sidebar ul li a i {
+            margin-right: 25px;
+            font-size: 1.3em;
+        }
+
+        .sidebar ul li a:hover {
+            background: #4b8b8c;
+            color: #ffffff;
+        }
+
+        .logout {
+            color: #f87171;
+        }
+
+        /* Main Content */
+        .content {
+            margin-left: 600px;
+            padding: 50px 40px;
+            background: #ffffff;
+            flex-grow: 1;
+        }
+
+        h2 {
+            font-size: 2em;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #4b8b8c;
+        }
+
+        .rapport-container {
+            width: 80%;
+            margin: 50px auto;
+            background: #1e1e1e;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .report-section {
+            margin-bottom: 30px;
+        }
+
+        .report-section h3 {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #f9fafb;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #333;
+        }
+
+        th {
+            background: #222;
+            color: #f9fafb;
+        }
+
+        td {
+            background: #1e1e1e;
+            color: #f9fafb;
+        }
+
+        canvas {
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 220px;
+                padding: 20px;
+            }
+
+            .content {
+                margin-left: 240px;
+            }
+
+            table {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sidebar {
+                width: 100%;
+                position: relative;
+                height: auto;
+                padding: 20px;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            table {
+                margin-top: 20px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <h2>Gestion de Stock</h2>
+            <ul>
+                <li><a href="{% url 'stocks_view' %}"><i class="fas fa-box"></i> Stocks</a></li>
+                <li><a href="{% url 'articles_view' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
+                <li><a href="{% url 'rapports_view' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
+                <li><a href="" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="content">
+            <div class="rapport-container">
+                <h2>Génération de Rapports</h2>
+
+                <!-- Stock Movement Reports -->
+                <div class="report-section">
+                    <h3>Mouvements de Stock</h3>
+                    <table id="stock-movement-table">
+                        <thead>
+                            <tr>
+                                <th>Article</th>
+                                <th>Type</th>
+                                <th>Quantité</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Dynamic stock movement data -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Stock Status by Category -->
+                <div class="report-section">
+                    <h3>État des Stocks par Catégorie</h3>
+                    <canvas id="stock-category-chart"></canvas>
+                </div>
+
+                <!-- Sales and Supply Statistics -->
+                <div class="report-section">
+                    <h3>Statistiques sur les Ventes et Approvisionnements</h3>
+                    <canvas id="sales-supply-chart"></canvas>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

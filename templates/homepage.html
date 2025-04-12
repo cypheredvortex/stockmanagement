@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Optimisez la gestion de vos stocks avec notre solution intuitive et performante.">
+    <meta name="author" content="Stock Management System">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <title>Accueil - Stock Management System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+    
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+            color: #f4f4f4;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+    
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 1.5rem;
+        }
+    
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            z-index: 1000;
+            border-bottom: 1px solid #2c2c2c;
+        }
+    
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 1.5rem;
+        }
+    
+        .nav-inner strong {
+            font-size: 1.4rem;
+            color: #00BFFF;
+            font-weight: 700;
+        }
+    
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 25px;
+            font-size: 1rem;
+        }
+    
+        .nav-links a {
+            color: #ddd;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+    
+        .nav-links a:hover {
+            color: #C084FC;
+        }
+    
+        .hero {
+            padding: 120px 20px 100px;
+            text-align: center;
+            background: url('background.jpg') no-repeat center center/cover;
+            position: relative;
+        }
+    
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+    
+        .hero > * {
+            position: relative;
+            z-index: 1;
+        }
+    
+        .hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            color: #ffffff;
+            font-weight: 800;
+        }
+    
+        .hero p {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+    
+        .cta-buttons {
+            margin-top: 30px;
+        }
+    
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            font-size: 1rem;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #00BFFF, #C084FC);
+            color: #fff;
+            text-decoration: none;
+            margin: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(0, 191, 255, 0.3);
+        }
+    
+        .btn:hover {
+            background: linear-gradient(135deg, #028acb, #a957e6);
+            transform: translateY(-4px);
+        }
+    
+        section {
+            padding: 80px 0;
+            text-align: center;
+        }
+    
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+    
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+    
+        .feature-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 25px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease;
+        }
+    
+        .feature-item:hover {
+            transform: translateY(-6px);
+        }
+    
+        .feature-item h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+            color: #00BFFF;
+        }
+    
+        .testimonial {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 600px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+    
+        .testimonial p {
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+    
+        .testimonial h4 {
+            font-size: 0.95rem;
+            color: #aaa;
+        }
+    
+        details {
+            background: linear-gradient(135deg, rgba(0, 191, 255, 0.08), rgba(192, 132, 252, 0.08));
+            border-radius: 12px;
+            padding: 18px 24px;
+            margin: 20px auto;
+            max-width: 700px;
+            border: 1px solid rgba(0, 191, 255, 0.2);
+            color: #eaeaea;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        details:hover {
+            border-color: #00ffc3; /* Neon teal glow on hover */
+            box-shadow: 0 6px 28px rgba(0, 255, 195, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        summary {
+            font-weight: 600;
+            cursor: pointer;
+            color: #00BFFF;
+            font-size: 1.05rem;
+            transition: color 0.3s ease;
+        }
+        
+        summary:hover {
+            color: #e879f9; /* Electric violet hover */
+        }
+    
+        footer {
+            background: #111;
+            padding: 25px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #888;
+            border-top: 1px solid #333;
+        }
+    
+        @media (max-width: 768px) {
+            .nav-links {
+                flex-direction: column;
+                gap: 10px;
+            }
+    
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+    
+            .hero p {
+                font-size: 1.1rem;
+            }
+        }
+    
+        .login-container,
+        .signup-container {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 30px;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 460px;
+            text-align: center;
+            margin: 100px auto;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    
+        .login-container h2,
+        .signup-container h2 {
+            margin-bottom: 10px;
+            font-size: 26px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+    
+        .login-container p,
+        .signup-container p {
+            font-size: 14px;
+            margin-bottom: 25px;
+            color: #bbb;
+        }
+    
+        .input-group {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+    
+        .input-group label {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 6px;
+            display: block;
+            color: #ccc;
+        }
+    
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: rgba(255,255,255,0.07);
+            color: #fff;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+    
+        .input-group input:focus,
+        .input-group select:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px #00BFFF;
+        }
+    
+        button[type="submit"] {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #00BFFF, #C084FC);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 191, 255, 0.3);
+        }
+    
+        button[type="submit"]:hover {
+            background: linear-gradient(135deg, #028acb, #a957e6);
+            transform: translateY(-4px);
+        }
+    
+        .extra-links {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+    
+        .extra-links a {
+            color: #C084FC;
+            text-decoration: none;
+            transition: text-decoration 0.3s ease;
+        }
+    
+        .extra-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-inner">
+            <a href="{% url 'home_view' %}"><strong>StockManager</strong></a>
+            <ul class="nav-links">
+                <li><a href="#about">À propos</a></li>
+                <li><a href="#features">Fonctionnalités</a></li>
+                <li><a href="#testimonials">Témoignages</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="{% url 'loginpage_view' %}">Connexion</a></li>
+            </ul>
+        </div>
+    </nav>
+{% block content %}
+    <div class="container">
+        <header class="hero" role="banner">
+            <h1>Gérez vos stocks avec efficacité</h1>
+            <p>Optimisez votre gestion de stock avec un suivi en temps réel et des outils performants.</p>
+            <div class="cta-buttons">
+                <a href="{% url 'loginpage_view' %}" class="btn">Connexion</a>
+                {% comment %} <a href="{% url 'signuppage_view' %}" class="btn">Créer un compte</a> {% endcomment %}
+            </div>
+        </header>
+
+        <main>
+            <section class="about" id="about" data-aos="fade-up">
+                <h2>Pourquoi choisir notre solution ?</h2>
+                <p>Notre système vous permet de gérer vos stocks facilement, d'analyser vos performances et de recevoir des alertes critiques.</p>
+            </section>
+
+            <section class="features" id="features" data-aos="fade-up">
+                <h2>Nos Fonctionnalités Clés</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <h3>📦 Gestion des Stocks</h3>
+                        <p>Ajoutez, modifiez et surveillez vos stocks en temps réel.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>📊 Rapports & Statistiques</h3>
+                        <p>Obtenez des analyses détaillées sur vos stocks et transactions.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>⚡ Alertes Automatisées</h3>
+                        <p>Recevez des notifications lorsque votre stock est bas.</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>📑 Gestion des Fournisseurs</h3>
+                        <p>Ajoutez et suivez vos fournisseurs en toute simplicité.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="testimonials" id="testimonials" data-aos="fade-up">
+                <h2>Ce que disent nos utilisateurs</h2>
+                <div class="testimonial">
+                    <p>"Ce système a transformé notre gestion de stock. Facile à utiliser et très efficace !"</p>
+                    <h4>- Sophie L., Responsable logistique</h4>
+                </div>
+                <div class="testimonial">
+                    <p>"Un outil indispensable pour notre entreprise. Les alertes automatiques sont géniales !"</p>
+                    <h4>- Marc D., Directeur des achats</h4>
+                </div>
+            </section>
+
+            <section class="faq" id="faq" data-aos="fade-up">
+                <h2>Questions Fréquentes</h2>
+                <details>
+                    <summary>Comment ajouter un nouvel article ?</summary>
+                    <p>Vous pouvez ajouter un article en accédant à la section 'Articles' et en remplissant le formulaire.</p>
+                </details>
+                <details>
+                    <summary>Comment recevoir des alertes de stock bas ?</summary>
+                    <p>Le système envoie automatiquement une notification lorsque le stock est critique.</p>
+                </details>
+                <details>
+                    <summary>Ce service est-il sécurisé ?</summary>
+                    <p>Oui, toutes les données sont sécurisées avec un cryptage avancé.</p>
+                </details>
+            </section>
+        </main>
+{% endblock content %}
+        <footer>
+            <p>&copy; 2024 Stock Management System. Tous droits réservés.</p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>
