@@ -4,39 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rapports - Stock Management System</title>
+
+    <!-- Roboto Font & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 
     <style>
+        /* General Styles */
         body {
             font-family: "Roboto", sans-serif;
             margin: 0;
             padding: 0;
-            background: #f3f4f6;
+            background: #f4f7fb;
             color: #333;
             display: flex;
             min-height: 100vh;
+            justify-content: flex-start;
         }
 
         /* Sidebar */
         .sidebar {
             width: 250px;
             height: 100vh;
-            background: #1f2937;
-            padding: 30px;
+            background: #2c3e50;
+            padding: 40px 20px;
             position: fixed;
             left: 0;
             top: 0;
             display: flex;
             flex-direction: column;
-            border-right: 2px solid #3b4c61;
+            border-right: 1px solid #34495e;
+            box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar h2 {
-            color: #f9fafb;
+            color: #ecf0f1;
             text-align: center;
-            font-size: 2.2em;
-            font-weight: 500;
+            font-size: 2.3em;
+            font-weight: 600;
             margin-bottom: 40px;
         }
 
@@ -50,105 +55,112 @@
         }
 
         .sidebar ul li a {
-            color: #d1d5db;
+            color: #bdc3c7;
             text-decoration: none;
-            font-size: 1.1em;
+            font-size: 1.2em;
             display: flex;
             align-items: center;
-            padding: 16px 18px;
+            padding: 12px 18px;
             border-radius: 8px;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.3s, color 0.3s;
         }
 
         .sidebar ul li a i {
-            margin-right: 25px;
-            font-size: 1.3em;
+            margin-right: 20px;
+            font-size: 1.4em;
         }
 
         .sidebar ul li a:hover {
-            background: #4b8b8c;
-            color: #ffffff;
+            background: #3498db;
+            color: #ecf0f1;
         }
 
         .logout {
-            color: #f87171;
+            color: #e74c3c;
+            font-weight: 600;
         }
 
         /* Main Content */
         .content {
-            margin-left: 600px;
-            padding: 50px 40px;
+            margin-left: 450px; /* Adjusted for sidebar */
+            padding: 40px;
             background: #ffffff;
             flex-grow: 1;
-        }
-
-        h2 {
-            font-size: 2em;
-            font-weight: 500;
-            margin-bottom: 20px;
-            color: #4b8b8c;
-        }
-
-        .rapport-container {
-            width: 80%;
-            margin: 50px auto;
-            background: #1e1e1e;
-            padding: 30px;
+            border-left: 1px solid #ecf0f1;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
-        .report-section {
+        .content h2 {
+            font-size: 2.5em;
+            font-weight: 500;
+            color: #2c3e50;
             margin-bottom: 30px;
+        }
+
+        /* Report Section */
+        .rapport-container {
+            margin-top: 50px;
         }
 
         .report-section h3 {
             text-align: center;
-            margin-bottom: 15px;
-            color: #f9fafb;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            color: #34495e;
         }
 
+        /* Stock Movement Table */
         table {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 30px;
             border-collapse: collapse;
             text-align: left;
         }
 
         th, td {
-            padding: 12px;
-            border: 1px solid #333;
+            padding: 15px;
+            border: 1px solid #ecf0f1;
         }
 
         th {
-            background: #222;
-            color: #f9fafb;
+            background: #3498db;
+            color: #fff;
         }
 
         td {
-            background: #1e1e1e;
-            color: #f9fafb;
+            background: #ecf0f1;
+            color: #2c3e50;
         }
 
+        /* Chart Containers */
         canvas {
-            background: #1e1e1e;
-            padding: 10px;
-            border-radius: 5px;
+            width: 100%;
+            height: 400px;
+            background: #ecf0f1;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
                 width: 220px;
-                padding: 20px;
+                padding: 25px;
             }
 
             .content {
                 margin-left: 240px;
+                padding: 30px;
             }
 
             table {
                 margin-top: 20px;
+            }
+
+            .report-section h3 {
+                font-size: 1.6em;
             }
         }
 
@@ -162,61 +174,76 @@
 
             .content {
                 margin-left: 0;
+                padding: 20px;
+            }
+
+            .rapport-container {
+                padding: 15px;
             }
 
             table {
                 margin-top: 20px;
             }
         }
-
     </style>
 </head>
 <body>
     <div class="dashboard">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <h2>Gestion de Stock</h2>
+            <h2><a href="{% url 'get_stocks' %}" style="color: inherit; text-decoration: none;">Gestion de Stock</a></h2>
             <ul>
-                <li><a href="{% url 'stocks_view' %}"><i class="fas fa-box"></i> Stocks</a></li>
-                <li><a href="{% url 'articles_view' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
-                <li><a href="{% url 'rapports_view' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
-                <li><a href="" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                <li><a href="{% url 'get_stocks' %}"><i class="fas fa-box"></i> Stocks</a></li>
+                <li><a href="{% url 'get_articles' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
+                <li><a href="{% url 'get_rapports' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
+                <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="content">
-            <div class="rapport-container">
-                <h2>Génération de Rapports</h2>
+            <h2>Génération de Rapports</h2>
 
-                <!-- Stock Movement Reports -->
+            <!-- Rapport Table Section -->
+            <div class="rapport-container">
                 <div class="report-section">
-                    <h3>Mouvements de Stock</h3>
-                    <table id="stock-movement-table">
+                    <h3>Liste des Rapports</h3>
+                    <table id="rapport-table">
                         <thead>
                             <tr>
-                                <th>Article</th>
-                                <th>Type</th>
-                                <th>Quantité</th>
+                                <th>ID</th>
+                                <th>Stock ID</th>
                                 <th>Date</th>
+                                <th>Mouvement</th>
+                                <th>État Stock</th>
+                                <th>Vente</th>
+                                <th>Approvisionnement</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Dynamic stock movement data -->
+                            {% for rapport in rapports %}
+                            <tr>
+                                <td>{{ rapport.id }}</td>
+                                <td>{{ rapport.stockId }}</td>
+                                <td>{{ rapport.DateRapport }}</td>
+                                <td>{{ rapport.MouvementDeStock }}</td>
+                                <td>{{ rapport.EtatStock }}</td>
+                                <td>{{ rapport.Vente }}</td>
+                                <td>{{ rapport.Approvisionnement }}</td>
+                                <td>
+                                    <a href="{% url 'update_rapport' rapport.id %}">Modifier</a> |
+                                    <form action="{% url 'delete_rapport' rapport.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" onclick="return confirm('Supprimer ce rapport ?');">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="8">Aucun rapport disponible.</td></tr>
+                            {% endfor %}
                         </tbody>
                     </table>
-                </div>
-
-                <!-- Stock Status by Category -->
-                <div class="report-section">
-                    <h3>État des Stocks par Catégorie</h3>
-                    <canvas id="stock-category-chart"></canvas>
-                </div>
-
-                <!-- Sales and Supply Statistics -->
-                <div class="report-section">
-                    <h3>Statistiques sur les Ventes et Approvisionnements</h3>
-                    <canvas id="sales-supply-chart"></canvas>
                 </div>
             </div>
         </main>
