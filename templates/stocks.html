@@ -15,31 +15,33 @@
             font-family: "Roboto", sans-serif;
             margin: 0;
             padding: 0;
-            background: #f3f4f6;
+            background: #e9eff1;
             color: #333;
             display: flex;
             min-height: 100vh;
+            justify-content: flex-start;
         }
 
         /* Sidebar */
         .sidebar {
             width: 250px;
             height: 100vh;
-            background: #1f2937;
-            padding: 30px;
+            background: #2c3e50; /* Updated color */
+            padding: 40px 20px;
             position: fixed;
             left: 0;
             top: 0;
             display: flex;
             flex-direction: column;
-            border-right: 2px solid #3b4c61;
+            border-right: 2px solid #34495e;
+            box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar h2 {
-            color: #f9fafb;
+            color: #ecf0f1;
             text-align: center;
-            font-size: 2.2em;
-            font-weight: 500;
+            font-size: 2.3em;
+            font-weight: 600;
             margin-bottom: 40px;
         }
 
@@ -53,151 +55,148 @@
         }
 
         .sidebar ul li a {
-            color: #d1d5db;
+            color: #bdc3c7;
             text-decoration: none;
-            font-size: 1.1em;
+            font-size: 1.2em;
             display: flex;
             align-items: center;
-            padding: 16px 18px;
+            padding: 12px 18px;
             border-radius: 8px;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: background 0.3s, color 0.3s;
         }
 
         .sidebar ul li a i {
-            margin-right: 25px;
-            font-size: 1.3em;
+            margin-right: 20px;
+            font-size: 1.4em;
         }
 
         .sidebar ul li a:hover {
-            background: #4b8b8c;
-            color: #ffffff;
+            background: #3498db;
+            color: #ecf0f1;
         }
 
         .logout {
-            color: #f87171;
+            color: #e74c3c;
+            font-weight: 600;
         }
 
         /* Main Content */
         .content {
-            margin-left: 550px;
+            margin-left: 600px; /* Adjusted for sidebar */
             padding: 40px;
             background: #ffffff;
             flex-grow: 1;
-            border-left: 2px solid #e5e7eb;
+            border-left: 1px solid #ecf0f1;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         .content h2 {
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: 500;
-            margin-bottom: 20px;
-        }
-
-        /* Stocks Container */
-        .stocks-container {
-            width: 100%;
-            margin: 20px auto;
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            color: #2c3e50;
+            margin-bottom: 30px;
         }
 
         /* Search Section */
         .search-container {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             text-align: center;
         }
 
         .search-container input {
-            padding: 10px;
-            width: 200px;
+            padding: 12px;
+            width: 280px;
             margin-right: 10px;
-            border-radius: 5px;
-            border: 1px solid #333;
-            background: #222;
-            color: #fff;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            color: #333;
         }
 
         .search-container button {
-            padding: 10px;
-            background: #bb86fc;
+            padding: 12px;
+            background: #3498db;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             transition: 0.3s;
         }
 
         .search-container button:hover {
-            background: #9b59ff;
+            background: #2980b9;
         }
 
         /* Stock Actions */
         .stock-actions {
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .stock-actions h3 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            font-size: 1.8em;
+            color: #34495e;
         }
 
         .stock-actions form {
             display: grid;
-            grid-gap: 10px;
+            grid-gap: 15px;
         }
 
         .stock-actions input,
         .stock-actions select {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #333;
-            background: #222;
-            color: #fff;
+            padding: 12px;
+            6px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            color: #333;
         }
 
         .stock-actions button {
-            background: #bb86fc;
+            background: #3498db;
             color: white;
             padding: 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             transition: 0.3s;
         }
 
         .stock-actions button:hover {
-            background: #9b59ff;
+            background: #2980b9;
         }
 
         /* Stock List Table */
         .stocks-list table {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 30px;
             border-collapse: collapse;
             text-align: left;
         }
 
         .stocks-list th, .stocks-list td {
-            padding: 12px;
-            border: 1px solid #333;
+            padding: 15px;
+            border: 1px solid #ecf0f1;
         }
 
         .stocks-list th {
-            background: #222;
+            background: #3498db;
             color: #fff;
         }
 
         .stocks-list td {
-            background: #1e1e1e;
+            background: #ecf0f1;
+            color: #2c3e50;
         }
 
         .stocks-list button {
             background: #e74c3c;
             color: white;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             transition: 0.3s;
         }
@@ -213,13 +212,14 @@
             text-align: center;
             padding: 5px;
             font-weight: bold;
+            border-radius: 6px;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
                 width: 220px;
-                padding: 20px;
+                padding: 25px;
             }
 
             .content {
@@ -227,12 +227,8 @@
                 padding: 30px;
             }
 
-            .stocks-container {
-                padding: 20px;
-            }
-
             .search-container input {
-                width: 150px;
+                width: 250px;
             }
 
             .stocks-list button {
@@ -253,10 +249,6 @@
                 padding: 20px;
             }
 
-            .stocks-container {
-                padding: 15px;
-            }
-
             .search-container input {
                 width: 100%;
                 margin-right: 0;
@@ -272,66 +264,84 @@
     <div class="dashboard">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <h2>Gestion de Stock</h2>
+            <h2><a href="{% url 'get_stocks' %}" style="color: inherit; text-decoration: none;">Gestion de Stock</a></h2>
             <ul>
-                <li><a href="{% url 'stocks_view' %}"><i class="fas fa-box"></i> Stocks</a></li>
-                <li><a href="{% url 'articles_view' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
-                <li><a href="{% url 'rapports_view' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
-                <li><a href="#" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                <li><a href="{% url 'get_stocks' %}"><i class="fas fa-box"></i> Stocks</a></li>
+                <li><a href="{% url 'get_articles' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
+                <li><a href="{% url 'get_rapports' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
+                <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="content">
-            <div class="stocks-container">
-                <h2>Gestion des Stocks</h2>
+            <h2>Gestion des Stocks</h2>
 
-                <!-- Search Section -->
-                <div class="search-container">
-                    <input type="text" id="search-bar" placeholder="Rechercher un article par référence ou nom">
-                    <button id="search-btn">Rechercher</button>
-                </div>
+            <!-- Search Section -->
+            <div class="search-container">
+                <input type="text" id="search-bar" placeholder="Rechercher un article par référence ou nom">
+                <button id="search-btn">Rechercher</button>
+            </div>
 
-                <!-- Stock Entry/Exit Section -->
-                <div class="stock-actions">
-                    <h3>Enregistrer Entrée/Sortie de Stock</h3>
-                    <form id="stock-form">
-                        <label for="article">Sélectionner un Article</label>
-                        <select id="article" name="article" required>
-                            <option value="">Choisir un article</option>
-                            <!-- Dynamic article options will go here -->
-                        </select>
+            <!-- Stock Entry/Exit Section -->
+            <div class="stock-actions">
+                <h3>Ajouter un Stock</h3>
+                <form method="post" action="{% url 'create_stock' %}">
+                    {% csrf_token %}
+                    <label for="article">Sélectionner un Article</label>
+                    <select id="article" name="article" required>
+                        <option value="">Choisir un article</option>
+                        {% for article in articles %}
+                            <option value="{{ article.id }}">{{ article.nom }}</option>
+                        {% endfor %}
+                    </select>
 
-                        <label for="action">Action</label>
-                        <select id="action" name="action" required>
-                            <option value="entry">Entrée</option>
-                            <option value="exit">Sortie</option>
-                        </select>
+                    <label for="quantite">Quantité</label>
+                    <input type="number" id="quantite" name="quantite" placeholder="Quantité" required>
 
-                        <label for="quantity">Quantité</label>
-                        <input type="number" id="quantity" name="quantity" placeholder="Quantité" required>
+                    <label for="seuilAlerte">Seuil d'Alerte</label>
+                    <input type="number" id="seuilAlerte" name="seuilAlerte" placeholder="Seuil d'alerte" required>
 
-                        <button type="submit">Enregistrer l'Action</button>
-                    </form>
-                </div>
+                    <button type="submit">Ajouter</button>
+                </form>
+                {% if error %}
+                    <p style="color: red;">{{ error }}</p>
+                {% endif %}
+            </div>
 
-                <!-- Stocks List -->
-                <div class="stocks-list">
-                    <h3>Liste des Stocks</h3>
-                    <table id="stocks-table">
-                        <thead>
+            <!-- Stocks List -->
+            <div class="stocks-list">
+                <h3>Liste des Stocks</h3>
+                <table id="stocks-table">
+                    <thead>
+                        <tr>
+                            <th>Nom de l'Article</th>
+                            <th>Référence (ID)</th>
+                            <th>Quantité Disponible</th>
+                            <th>Seuil d'Alerte</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for stock in stocks %}
                             <tr>
-                                <th>Nom de l'Article</th>
-                                <th>Référence</th>
-                                <th>Quantité Disponible</th>
-                                <th>Actions</th>
+                                <td>{{ stock.article.nom }}</td>
+                                <td>{{ stock.article.id }}</td>
+                                <td>{{ stock.quantiteDisponible }}</td>
+                                <td>{{ stock.seuilAlerte }}</td>
+                                <td>
+                                    <a href="{% url 'update_stock' stock.id %}">Modifier</a> |
+                                    <form action="{% url 'delete_stock' stock.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" onclick="return confirm('Supprimer ce stock ?');">Supprimer</button>
+                                    </form>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Dynamic stock list will go here -->
-                        </tbody>
-                    </table>
-                </div>
+                        {% empty %}
+                            <tr><td colspan="5">Aucun stock disponible.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>
