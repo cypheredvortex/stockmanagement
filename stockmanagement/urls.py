@@ -34,8 +34,18 @@ from stock.views import create_stock
 from stock.views import delete_stock
 from stock.views import update_stock
 from article.views import get_articles
+from article.views import create_article
+from article.views import update_article
+from pages.views import update_article_view
+from article.views import delete_article
 from commande.views import get_commands
-from rapport.views import get_rapport
+from rapport.views import get_rapports
+from rapport.views import create_rapport
+from rapport.views import delete_rapport
+from rapport.views import update_rapport
+from .views import logout_view
+from stock.views import list_stocks
+from article.views import list_articles
 
 import debug_toolbar
 
@@ -43,23 +53,33 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('__debug__/', include('debug_toolbar.urls')),
     path('',home_view,name='home_view'),
-    path('articles',article_view,name='articles_view'),
+    path('articlesview',article_view,name='article_view'),
     path('loginpage',loginpage_view,name='loginpage_view'),
-    path('stocks',stock_view,name='stock_view'),
+    path('stockview',stock_view,name='stock_view'),
     path('fournisseurs',fournisseur_view,name='fournisseurs_view'),
     path('commands',commands_view,name='commands_view'),
-    path('rapports',rapport_view,name='rapport_view'),
-    path('getrapports/', get_rapport, name='get_rapport'),
+    path('rapportsview',rapport_view,name='rapport_view'),
+    path('rapports/', get_rapports, name='get_rapports'),
+    path('createrapport', create_rapport, name='create_rapport'),
+    path('deleterapport/<int:rapport_id>/', delete_rapport, name='delete_rapport'),
+    path('updaterapport/<int:rapport_id>/', update_rapport, name='update_rapport'),
     path('gestionnaire',gestionnaire_view,name='gestionnaire_view'),
     path('auth',views.auth_view,name='auth_view'),
     path('employe',employe_view,name='employe_view'),
     path('listarticlesview',listarticles_view,name='listarticles_view'),
     path('listcommandsview',listcommands_view,name='listcommands_view'),
     path('liststocksview',liststocks_view,name='liststocks_view'),
-    path('liststocks', get_stocks, name='get_stocks'),
+    path('liststocks', list_stocks, name='list_stocks'),
+    path('stocks/', get_stocks, name='get_stocks'),
     path('createstock', create_stock, name='create_stock'),
     path('deletestock/<int:stock_id>/', delete_stock, name='delete_stock'),
     path('updatestock/<int:stock_id>/', update_stock, name='update_stock'),
-    path('listarticles',get_articles,name='get_articles'),
+    path('listarticles',list_articles,name='list_articles'),
+    path('articles/', get_articles, name='get_articles'),
+    path('createarticle', create_article, name='create_article'),
+    path('deletearticle/<int:article_id>/', delete_article, name='delete_article'),
+    path('updatearticle/<int:article_id>/', update_article, name='update_article'),
+    path('updatearticleview/<int:article_id>/', update_article_view, name='update_article_view'),
     path('listcommands',get_commands,name='get_commands'),
+    path('logout/', logout_view, name='logout_view'),
     ]
