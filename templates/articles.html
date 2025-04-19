@@ -12,7 +12,7 @@
             font-family: "Roboto", sans-serif;
             margin: 0;
             padding: 0;
-            background: #f3f4f6;
+            background: #f4f7fb;
             color: #333;
             display: flex;
             min-height: 100vh;
@@ -22,7 +22,7 @@
         .sidebar {
             width: 250px;
             height: 100vh;
-            background: #1f2937;
+            background:  #2c3e50; /* Retained original color */
             padding: 30px;
             position: fixed;
             left: 0;
@@ -76,48 +76,53 @@
 
         /* Main Content */
         .content {
-            margin-left: 600px;
+            margin-left: 600px; /* Adjusted for sidebar */
             padding: 50px 40px;
             background: #ffffff;
             flex-grow: 1;
+            border-left: 1px solid #ecf0f1;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         h2 {
-            font-size: 2em;
+            font-size: 2.5em;
             font-weight: 500;
             margin-bottom: 20px;
-            color: #4b8b8c;
+            color: #34495e;
         }
 
+        /* Search Section */
         .search-container {
             margin-bottom: 20px;
             text-align: center;
         }
 
         .search-container input {
-            padding: 10px;
-            width: 200px;
+            padding: 12px;
+            width: 220px;
             margin-right: 10px;
-            border-radius: 5px;
-            border: 1px solid #333;
-            background: #222;
-            color: #fff;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            color: #333;
         }
 
         .search-container button {
-            padding: 10px;
-            background: #bb86fc;
+            padding: 12px;
+            background: #3498db;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             transition: 0.3s;
         }
 
         .search-container button:hover {
-            background: #9b59ff;
+            background: #2980b9;
         }
 
+        /* Add Article Section */
         .add-article {
             margin-bottom: 30px;
         }
@@ -125,65 +130,67 @@
         .add-article h3 {
             text-align: center;
             margin-bottom: 15px;
-            color: #374151;
+            font-size: 1.8em;
+            color: #34495e;
         }
 
         .add-article form {
             display: grid;
-            grid-gap: 10px;
+            grid-gap: 15px;
         }
 
         .add-article input,
         .add-article select {
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #333;
-            background: #222;
-            color: #fff;
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            color: #333;
         }
 
         .add-article button {
-            background: #bb86fc;
+            background: #3498db;
             color: white;
             padding: 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             transition: 0.3s;
         }
 
         .add-article button:hover {
-            background: #9b59ff;
+            background: #2980b9;
         }
 
+        /* Articles List */
         .articles-list table {
             width: 100%;
-            margin-top: 20px;
+            margin-top: 30px;
             border-collapse: collapse;
             text-align: left;
         }
 
         .articles-list th, .articles-list td {
-            padding: 12px;
-            border: 1px solid #333;
+            padding: 15px;
+            border: 1px solid #ecf0f1;
         }
 
         .articles-list th {
-            background: #222;
-            color: #f9fafb;
+            background: #3498db;
+            color: #fff;
         }
 
         .articles-list td {
-            background: #1e1e1e;
-            color: #f9fafb;
+            background: #ecf0f1;
+            color: #2c3e50;
         }
 
         .articles-list button {
             background: #e74c3c;
             color: white;
-            padding: 5px 10px;
+            padding: 8px 12px;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             cursor: pointer;
             transition: 0.3s;
         }
@@ -201,10 +208,15 @@
 
             .content {
                 margin-left: 240px;
+                padding: 30px;
             }
 
-            .articles-list table {
-                margin-top: 20px;
+            .search-container input {
+                width: 250px;
+            }
+
+            .articles-list button {
+                font-size: 0.9em;
             }
         }
 
@@ -218,25 +230,30 @@
 
             .content {
                 margin-left: 0;
+                padding: 20px;
             }
 
-            .articles-list table {
-                margin-top: 20px;
+            .search-container input {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            .articles-list button {
+                font-size: 0.8em;
             }
         }
-
     </style>
 </head>
 <body>
     <div class="dashboard">
         <!-- Sidebar Navigation -->
         <aside class="sidebar">
-            <h2>Gestion de Stock</h2>
+            <h2><a href="{% url 'get_stocks' %}" style="color: inherit; text-decoration: none;">Gestion de Stock</a></h2>
             <ul>
-                <li><a href="{% url 'stocks_view' %}"><i class="fas fa-box"></i> Stocks</a></li>
-                <li><a href="{% url 'articles_view' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
-                <li><a href="{% url 'rapports_view' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
-                <li><a href="" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                <li><a href="{% url 'get_stocks' %}"><i class="fas fa-box"></i> Stocks</a></li>
+                <li><a href="{% url 'get_articles' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
+                <li><a href="{% url 'get_rapports' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
+                <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
             </ul>
         </aside>
 
@@ -245,30 +262,19 @@
             <div class="articles-container">
                 <h2>Gestion des Articles</h2>
 
-                <!-- Search Section -->
-                <div class="search-container">
-                    <input type="text" id="search-bar" placeholder="Rechercher un article par référence ou nom">
-                    <button id="search-btn">Rechercher</button>
-                </div>
-
                 <!-- Add Article Section -->
                 <div class="add-article">
                     <h3>Ajouter un Nouvel Article</h3>
-                    <form id="add-article-form">
-                        <label for="name">Nom</label>
-                        <input type="text" id="name" name="name" placeholder="Nom de l'article" required>
-                        
-                        <label for="reference">Référence</label>
-                        <input type="text" id="reference" name="reference" placeholder="Référence de l'article" required>
-                        
-                        <label for="category">Catégorie</label>
-                        <input type="text" id="category" name="category" placeholder="Catégorie de l'article" required>
-                        
-                        <label for="price">Prix</label>
-                        <input type="number" id="price" name="price" placeholder="Prix de l'article" required>
-                        
-                        <label for="quantity">Quantité Initiale</label>
-                        <input type="number" id="quantity" name="quantity" placeholder="Quantité initiale" required>
+                    <form method="POST" action="{% url 'create_article' %}">
+                        {% csrf_token %}
+                        <label for="nom">Nom</label>
+                        <input type="text" id="nom" name="nom" placeholder="Nom de l'article" required>
+
+                        <label for="quantite">Quantité</label>
+                        <input type="number" id="quantite" name="quantite" placeholder="Quantité de l'article" required>
+
+                        <label for="fournisseur">Fournisseur (ID)</label>
+                        <input type="number" id="fournisseur" name="fournisseur" placeholder="ID du fournisseur">
 
                         <button type="submit">Ajouter l'Article</button>
                     </form>
@@ -281,15 +287,28 @@
                         <thead>
                             <tr>
                                 <th>Nom</th>
-                                <th>Référence</th>
-                                <th>Catégorie</th>
-                                <th>Prix</th>
                                 <th>Quantité</th>
+                                <th>Fournisseur</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- Articles will be dynamically added here -->
+                            {% for article in articles %}
+                            <tr>
+                                <td>{{ article.nom }}</td>
+                                <td>{{ article.quantite }}</td>
+                                <td>{{ article.fournisseur.id }}</td>
+                                <td>
+                                    <a href="{% url 'update_article_view' article.id %}">Modifier</a> |
+                                    <form action="{% url 'delete_article' article.id %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit">Supprimer</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="4">Aucun article disponible.</td></tr>
+                            {% endfor %}
                         </tbody>
                     </table>
                 </div>
