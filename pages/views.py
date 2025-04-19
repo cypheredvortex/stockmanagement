@@ -39,7 +39,5 @@ def listarticles_view(request):
 def listcommands_view(request):
     return render(request,'listcommands.html')
 
-
-
-
-
+def update_article_view(request):
+    return render(request,'updateArticle.html')
