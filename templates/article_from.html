@@ -1,0 +1,37 @@
+<h2>{% if article %}Modifier{% else %}Ajouter{% endif %} un Article</h2>
+<form method="POST" action="{% url 'update_article' article.id %}">
+    {% csrf_token %}
+    
+    <!-- Nom Field -->
+    <label for="nom">Nom</label>
+    <input type="text" id="nom" name="nom" 
+        value="{% if article %}{{ article.nom }}{% endif %}" required>
+
+    <!-- Quantité Field -->
+    <label for="quantite">Quantité</label>
+    <input type="number" id="quantite" name="quantite" 
+        value="{% if article %}{{ article.quantite }}{% endif %}" required>
+
+    <!-- Fournisseur (Supplier) Field -->
+    <label for="fournisseur">Fournisseur (ID)</label>
+    <input type="number" id="fournisseur" name="fournisseur" 
+        value="{% if article and article.fournisseur %}{{ article.fournisseur.id }}{% endif %}" placeholder="ID du fournisseur (facultatif)">
+
+    <!-- References Field (Optional) -->
+    <label for="references">Référence</label>
+    <input type="text" id="references" name="references" 
+        value="{% if article %}{{ article.references }}{% endif %}" placeholder="Référence de l'article (facultatif)">
+
+    <!-- Categorie Field (Optional) -->
+    <label for="categorie">Catégorie</label>
+    <input type="text" id="categorie" name="categorie" 
+        value="{% if article %}{{ article.categorie }}{% endif %}" placeholder="Catégorie de l'article (facultatif)">
+
+    <!-- Prix Field (Optional) -->
+    <label for="prix">Prix (€)</label>
+    <input type="number" id="prix" name="prix" step="0.01" 
+        value="{% if article %}{{ article.prix }}{% endif %}" placeholder="Prix de l'article (facultatif)">
+
+    <!-- Submit Button -->
+    <button type="submit">{% if article %}Modifier{% else %}Ajouter{% endif %} l'Article</button>
+</form>
