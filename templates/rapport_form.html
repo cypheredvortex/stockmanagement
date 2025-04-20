@@ -1,0 +1,44 @@
+<h2>{% if rapport %}Modifier{% else %}Ajouter{% endif %} un Rapport</h2>
+
+<form method="POST" action="{% if rapport %}{% url 'update_rapport' rapport.id %}{% else %}{% url 'create_rapport' %}{% endif %}">
+    {% csrf_token %}
+
+    <!-- Stock ID (select from stocks) -->
+    <label for="stockId">Stock</label>
+    <select id="stockId" name="stockId" required>
+        <option value="">-- Sélectionner un stock --</option>
+        {% for stock in stocks %}
+            <option value="{{ stock.id }}" {% if rapport and rapport.stockId == stock.id %}selected{% endif %}>
+                {{ stock.nom }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <!-- DateRapport -->
+    <label for="DateRapport">Date</label>
+    <input type="date" id="DateRapport" name="DateRapport"
+           value="{% if rapport %}{{ rapport.DateRapport|date:'Y-m-d' }}{% endif %}" required>
+
+    <!-- MouvementDeStock -->
+    <label for="MouvementDeStock">Mouvement</label>
+    <input type="text" id="MouvementDeStock" name="MouvementDeStock"
+           value="{% if rapport %}{{ rapport.MouvementDeStock }}{% endif %}" required>
+
+    <!-- EtatStock -->
+    <label for="EtatStock">État Stock</label>
+    <input type="text" id="EtatStock" name="EtatStock"
+           value="{% if rapport %}{{ rapport.EtatStock }}{% endif %}" required>
+
+    <!-- Vente -->
+    <label for="Vente">Vente</label>
+    <input type="text" id="Vente" name="Vente"
+           value="{% if rapport %}{{ rapport.Vente }}{% endif %}" required>
+
+    <!-- Approvisionnement -->
+    <label for="Approvisionnement">Approvisionnement</label>
+    <input type="text" id="Approvisionnement" name="Approvisionnement"
+           value="{% if rapport %}{{ rapport.Approvisionnement }}{% endif %}" required>
+
+    <!-- Submit Button -->
+    <button type="submit">{% if rapport %}Modifier{% else %}Ajouter{% endif %} le Rapport</button>
+</form>
