@@ -31,11 +31,12 @@ def get_rapports(request):
     # Pass the data to the template
     return render(request, 'rapports.html', {'rapports': rapports})
 
-def update_rapport(request, pk):
-    rapport = get_object_or_404(Rapport, pk=pk)  # Get the rapport object by primary key
+def update_rapport(request, rapport_id):
+    # Get the rapport object using the provided rapport_id
+    rapport = get_object_or_404(Rapport, id=rapport_id)
 
     if request.method == 'POST':
-        # Fetch the updated data from the POST request
+        # Fetch the updated data from the POST request and update the rapport
         rapport.stockId = request.POST.get('stockId')
         rapport.DateRapport = request.POST.get('DateRapport')
         rapport.MouvementDeStock = request.POST.get('MouvementDeStock')
@@ -46,16 +47,18 @@ def update_rapport(request, pk):
         # Save the updated rapport to the database
         rapport.save()
 
-        return redirect('rapport_list')  # Redirect to the list after saving
+        return redirect('rapport_list')  # Redirect to the rapport list after updating
 
-    return render(request, 'rapport_form.html', {'rapport': rapport})  # Show the form with existing data
+    return render(request, 'rapport_form.html', {'rapport': rapport})  # Display the form with existing data
 
-# Delete Rapport
-def delete_rapport(request, pk):
-    rapport = get_object_or_404(Rapport, pk=pk)  # Get the rapport object by primary key
+# Delete Rapport View
+def delete_rapport(request, rapport_id):
+    # Get the rapport object using the provided rapport_id
+    rapport = get_object_or_404(Rapport, id=rapport_id)
 
     if request.method == 'POST':
-        rapport.delete()  # Delete the rapport object
+        # Delete the rapport object
+        rapport.delete()
         return redirect('rapport_list')  # Redirect to the list after deletion
 
-    return render(request, 'rapport_confirm_delete.html', {'rapport': rapport})  # Confirm deletion page
+    return render(request, 'rapport_confirm_delete.html', {'rapport': rapport}) 
