@@ -1,4 +1,9 @@
 from django.shortcuts import render
+from django.shortcuts import get_object_or_404
+from article.models import Article
+from stock.models import Stock
+from rapport.models import Rapport
+
 # Create your views here.
 def home_view(request):
     return render(request, 'homepage.html')
@@ -39,5 +44,14 @@ def listarticles_view(request):
 def listcommands_view(request):
     return render(request,'listcommands.html')
 
-def update_article_view(request):
-    return render(request,'updateArticle.html')
+def update_article_view(request, article_id):
+    article = get_object_or_404(Article, pk=article_id)
+    return render(request, 'article_form.html', {'article': article})
+
+def update_stock_view(request, stock_id):
+    stock = get_object_or_404(Stock, id=stock_id)
+    return render(request, 'stock_form.html', {'stock': stock})
+
+def update_rapport_view(request, pk):
+    rapport = get_object_or_404(Rapport, pk=pk)
+    return render(request, 'rapport_form.html', {'rapport': rapport})
