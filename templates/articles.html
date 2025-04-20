@@ -12,234 +12,188 @@
             font-family: "Roboto", sans-serif;
             margin: 0;
             padding: 0;
-            background: #f4f7fb;
-            color: #333;
+            background: #f9fafb;
+            color: #1f2937;
             display: flex;
             min-height: 100vh;
         }
-
+    
+        .dashboard {
+            display: flex;
+            width: 100%;
+        }
+    
         /* Sidebar */
         .sidebar {
             width: 250px;
             height: 100vh;
-            background:  #2c3e50; /* Retained original color */
-            padding: 30px;
+            background: #111827;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
             position: fixed;
             left: 0;
             top: 0;
-            display: flex;
-            flex-direction: column;
-            border-right: 2px solid #3b4c61;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
         }
-
+    
         .sidebar h2 {
             color: #f9fafb;
             text-align: center;
-            font-size: 2.2em;
-            font-weight: 500;
+            font-size: 1.8em;
             margin-bottom: 40px;
         }
-
+    
         .sidebar ul {
             list-style: none;
             padding: 0;
         }
-
+    
         .sidebar ul li {
-            margin: 20px 0;
+            margin-bottom: 20px;
         }
-
+    
         .sidebar ul li a {
             color: #d1d5db;
             text-decoration: none;
-            font-size: 1.1em;
+            font-size: 1em;
+            padding: 12px 18px;
+            border-radius: 8px;
             display: flex;
             align-items: center;
-            padding: 16px 18px;
-            border-radius: 8px;
-            transition: background 0.3s ease, color 0.3s ease;
+            transition: 0.3s;
         }
-
+    
         .sidebar ul li a i {
-            margin-right: 25px;
-            font-size: 1.3em;
+            margin-right: 12px;
         }
-
+    
         .sidebar ul li a:hover {
-            background: #4b8b8c;
+            background: #2563eb;
             color: #ffffff;
         }
-
+    
         .logout {
-            color: #f87171;
+            color: #f87171 !important;
         }
-
-        /* Main Content */
+    
+        /* Content */
         .content {
-            margin-left: 600px; /* Adjusted for sidebar */
-            padding: 50px 40px;
-            background: #ffffff;
-            flex-grow: 1;
-            border-left: 1px solid #ecf0f1;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        h2 {
-            font-size: 2.5em;
-            font-weight: 500;
-            margin-bottom: 20px;
-            color: #34495e;
-        }
-
-        /* Search Section */
-        .search-container {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .search-container input {
-            padding: 12px;
-            width: 220px;
-            margin-right: 10px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            background: #f9f9f9;
-            color: #333;
-        }
-
-        .search-container button {
-            padding: 12px;
-            background: #3498db;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .search-container button:hover {
-            background: #2980b9;
-        }
-
-        /* Add Article Section */
-        .add-article {
-            margin-bottom: 30px;
-        }
-
-        .add-article h3 {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 1.8em;
-            color: #34495e;
-        }
-
-        .add-article form {
-            display: grid;
-            grid-gap: 15px;
-        }
-
-        .add-article input,
-        .add-article select {
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-            background: #f9f9f9;
-            color: #333;
-        }
-
-        .add-article button {
-            background: #3498db;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .add-article button:hover {
-            background: #2980b9;
-        }
-
-        /* Articles List */
-        .articles-list table {
+            margin-left: 270px;
+            padding: 40px;
             width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
-            text-align: left;
+            background: #f3f4f6;
         }
-
-        .articles-list th, .articles-list td {
-            padding: 15px;
-            border: 1px solid #ecf0f1;
+    
+        .articles-container h2,
+        .articles-container h3 {
+            font-size: 1.8em;
+            margin-bottom: 30px;
+            color: #111827;
         }
-
-        .articles-list th {
-            background: #3498db;
-            color: #fff;
+    
+        /* Form Styling */
+        .add-article form {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 50px;
         }
-
-        .articles-list td {
-            background: #ecf0f1;
-            color: #2c3e50;
+    
+        .add-article label {
+            font-weight: 500;
+            color: #374151;
         }
-
-        .articles-list button {
-            background: #e74c3c;
+    
+        .add-article input {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+    
+        .add-article button {
+            background: #2563eb;
             color: white;
-            padding: 8px 12px;
+            padding: 12px;
+            font-size: 1em;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: background 0.3s;
         }
-
-        .articles-list button:hover {
-            background: #c0392b;
+    
+        .add-article button:hover {
+            background: #1d4ed8;
         }
-
-        /* Responsive Design */
+    
+        /* Table Styling */
+        #articles-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+        }
+    
+        #articles-table th,
+        #articles-table td {
+            padding: 18px 20px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
+    
+        #articles-table th {
+            background: #f1f5f9;
+            color: #1e293b;
+            font-weight: 600;
+        }
+    
+        #articles-table tbody tr:hover {
+            background: #f9fafb;
+        }
+    
+        #articles-table td {
+            color: #374151;
+        }
+    
+        /* Action buttons */
+        td a,
+        td button {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+    
+        td button:hover,
+        td a:hover {
+            text-decoration: underline;
+        }
+    
         @media (max-width: 768px) {
             .sidebar {
-                width: 220px;
-                padding: 20px;
-            }
-
-            .content {
-                margin-left: 240px;
-                padding: 30px;
-            }
-
-            .search-container input {
-                width: 250px;
-            }
-
-            .articles-list button {
-                font-size: 0.9em;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .sidebar {
                 width: 100%;
-                position: relative;
                 height: auto;
-                padding: 20px;
+                position: relative;
             }
-
+    
             .content {
                 margin-left: 0;
                 padding: 20px;
             }
-
-            .search-container input {
-                width: 100%;
-                margin-right: 0;
-            }
-
-            .articles-list button {
-                font-size: 0.8em;
+    
+            .dashboard {
+                flex-direction: column;
             }
         }
     </style>
@@ -256,30 +210,41 @@
                 <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
             </ul>
         </aside>
-
+    
         <!-- Main Content -->
         <main class="content">
             <div class="articles-container">
                 <h2>Gestion des Articles</h2>
-
+    
                 <!-- Add Article Section -->
                 <div class="add-article">
                     <h3>Ajouter un Nouvel Article</h3>
                     <form method="POST" action="{% url 'create_article' %}">
                         {% csrf_token %}
+                        
                         <label for="nom">Nom</label>
                         <input type="text" id="nom" name="nom" placeholder="Nom de l'article" required>
-
+                
                         <label for="quantite">Quantité</label>
                         <input type="number" id="quantite" name="quantite" placeholder="Quantité de l'article" required>
-
+                
                         <label for="fournisseur">Fournisseur (ID)</label>
-                        <input type="number" id="fournisseur" name="fournisseur" placeholder="ID du fournisseur">
-
+                        <input type="number" id="fournisseur" name="fournisseur" placeholder="ID du fournisseur (facultatif)">
+                
+                        <label for="references">Référence</label>
+                        <input type="text" id="references" name="references" placeholder="Référence de l'article (facultatif)">
+                
+                        <label for="categorie">Catégorie</label>
+                        <input type="text" id="categorie" name="categorie" placeholder="Catégorie de l'article (facultatif)">
+                
+                        <label for="prix">Prix (€)</label>
+                        <input type="number" id="prix" name="prix" step="0.01" placeholder="Prix de l'article (facultatif)">
+                
                         <button type="submit">Ajouter l'Article</button>
                     </form>
                 </div>
-
+                
+    
                 <!-- Articles List -->
                 <div class="articles-list">
                     <h3>Liste des Articles</h3>
@@ -287,6 +252,9 @@
                         <thead>
                             <tr>
                                 <th>Nom</th>
+                                <th>Référence</th>
+                                <th>Catégorie</th>
+                                <th>Prix (€)</th>
                                 <th>Quantité</th>
                                 <th>Fournisseur</th>
                                 <th>Actions</th>
@@ -296,8 +264,17 @@
                             {% for article in articles %}
                             <tr>
                                 <td>{{ article.nom }}</td>
+                                <td>{{ article.references|default:"-" }}</td>
+                                <td>{{ article.categorie|default:"-" }}</td>
+                                <td>{{ article.prix|default:"-" }}</td>
                                 <td>{{ article.quantite }}</td>
-                                <td>{{ article.fournisseur.id }}</td>
+                                <td>
+                                    {% if article.fournisseur %}
+                                        {{ article.fournisseur.nom }}
+                                    {% else %}
+                                        Aucun
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <a href="{% url 'update_article_view' article.id %}">Modifier</a> |
                                     <form action="{% url 'delete_article' article.id %}" method="POST" style="display:inline;">
@@ -307,7 +284,7 @@
                                 </td>
                             </tr>
                             {% empty %}
-                            <tr><td colspan="4">Aucun article disponible.</td></tr>
+                            <tr><td colspan="7">Aucun article disponible.</td></tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -315,5 +292,6 @@
             </div>
         </main>
     </div>
+    
 </body>
 </html>
