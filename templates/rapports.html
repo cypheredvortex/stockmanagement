@@ -10,181 +10,235 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 
     <style>
-        /* General Styles */
-        body {
-            font-family: "Roboto", sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f4f7fb;
-            color: #333;
-            display: flex;
-            min-height: 100vh;
-            justify-content: flex-start;
-        }
+        /* General Layout */
+body {
+    font-family: "Roboto", sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f9fafb;
+    color: #1f2937;
+    display: flex;
+    min-height: 100vh;
+}
 
-        /* Sidebar */
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background: #2c3e50;
-            padding: 40px 20px;
-            position: fixed;
-            left: 0;
-            top: 0;
-            display: flex;
-            flex-direction: column;
-            border-right: 1px solid #34495e;
-            box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
-        }
+.dashboard {
+    display: flex;
+    width: 100%;
+}
 
-        .sidebar h2 {
-            color: #ecf0f1;
-            text-align: center;
-            font-size: 2.3em;
-            font-weight: 600;
-            margin-bottom: 40px;
-        }
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #111827;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+}
 
-        .sidebar ul {
-            list-style: none;
-            padding: 0;
-        }
+.sidebar h2 {
+    color: #f9fafb;
+    text-align: center;
+    font-size: 1.8em;
+    margin-bottom: 40px;
+}
 
-        .sidebar ul li {
-            margin: 20px 0;
-        }
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
 
-        .sidebar ul li a {
-            color: #bdc3c7;
-            text-decoration: none;
-            font-size: 1.2em;
-            display: flex;
-            align-items: center;
-            padding: 12px 18px;
-            border-radius: 8px;
-            transition: background 0.3s, color 0.3s;
-        }
+.sidebar ul li {
+    margin-bottom: 20px;
+}
 
-        .sidebar ul li a i {
-            margin-right: 20px;
-            font-size: 1.4em;
-        }
+.sidebar ul li a {
+    color: #d1d5db;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 12px 18px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    transition: 0.3s;
+}
 
-        .sidebar ul li a:hover {
-            background: #3498db;
-            color: #ecf0f1;
-        }
+.sidebar ul li a i {
+    margin-right: 12px;
+}
 
-        .logout {
-            color: #e74c3c;
-            font-weight: 600;
-        }
+.sidebar ul li a:hover {
+    background: #2563eb;
+    color: #ffffff;
+}
 
-        /* Main Content */
-        .content {
-            margin-left: 450px; /* Adjusted for sidebar */
-            padding: 40px;
-            background: #ffffff;
-            flex-grow: 1;
-            border-left: 1px solid #ecf0f1;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-        }
+.logout {
+    color: #f87171 !important;
+}
 
-        .content h2 {
-            font-size: 2.5em;
-            font-weight: 500;
-            color: #2c3e50;
-            margin-bottom: 30px;
-        }
+/* Content */
+.content {
+    margin-left: 270px;
+    padding: 40px;
+    width: 100%;
+    background: #f3f4f6;
+}
 
-        /* Report Section */
-        .rapport-container {
-            margin-top: 50px;
-        }
+.content h2,
+.content h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #111827;
+}
 
-        .report-section h3 {
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.8em;
-            color: #34495e;
-        }
+/* Form Styling */
+.rapport-form {
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    margin-bottom: 40px;
+    max-width: 700px;
+}
 
-        /* Stock Movement Table */
-        table {
-            width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
-            text-align: left;
-        }
+.rapport-form h3 {
+    font-size: 1.4em;
+    margin-bottom: 20px;
+    color: #111827;
+}
 
-        th, td {
-            padding: 15px;
-            border: 1px solid #ecf0f1;
-        }
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
 
-        th {
-            background: #3498db;
-            color: #fff;
-        }
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
 
-        td {
-            background: #ecf0f1;
-            color: #2c3e50;
-        }
+.form-group label {
+    font-weight: 500;
+    margin-bottom: 8px;
+}
 
-        /* Chart Containers */
-        canvas {
-            width: 100%;
-            height: 400px;
-            background: #ecf0f1;
-            margin-top: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
+.form-group input {
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1em;
+    background: #fff;
+}
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 220px;
-                padding: 25px;
-            }
+.form-actions {
+    margin-top: 30px;
+    text-align: right;
+}
 
-            .content {
-                margin-left: 240px;
-                padding: 30px;
-            }
+.form-actions button {
+    background: #10b981;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
 
-            table {
-                margin-top: 20px;
-            }
+.form-actions button:hover {
+    background: #059669;
+}
+/* Table Styling */
+.rapport-container table,
+.stocks-list table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
 
-            .report-section h3 {
-                font-size: 1.6em;
-            }
-        }
+.rapport-container th,
+.rapport-container td,
+.stocks-list th,
+.stocks-list td {
+    padding: 18px 20px;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
 
-        @media (max-width: 480px) {
-            .sidebar {
-                width: 100%;
-                position: relative;
-                height: auto;
-                padding: 20px;
-            }
+.rapport-container th,
+.stocks-list th {
+    background: #f1f5f9;
+    color: #1e293b;
+    font-weight: 600;
+}
 
-            .content {
-                margin-left: 0;
-                padding: 20px;
-            }
+.rapport-container tbody tr:hover,
+.stocks-list tbody tr:hover {
+    background: #f9fafb;
+}
 
-            .rapport-container {
-                padding: 15px;
-            }
+.rapport-container td,
+.stocks-list td {
+    color: #374151;
+}
 
-            table {
-                margin-top: 20px;
-            }
-        }
+.rapport-container a,
+.stocks-list a {
+    color: #2563eb;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.rapport-container form,
+.stocks-list form {
+    display: inline;
+}
+
+.rapport-container button,
+.stocks-list button {
+    background: transparent;
+    color: #ef4444;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+
+    .dashboard {
+        flex-direction: column;
+    }
+
+    .rapport-form,
+    .stock-actions form {
+        width: 100%;
+    }
+
+    .rapport-container table {
+        font-size: 0.9em;
+    }
+}
+
     </style>
 </head>
 <body>
@@ -204,49 +258,91 @@
         <main class="content">
             <h2>Génération de Rapports</h2>
 
+            <!-- Create Rapport Form -->
+            <div class="rapport-form">
+                <h3>Ajouter un Rapport</h3>
+                <form method="POST" action="{% url 'create_rapport' %}">
+                    {% csrf_token %}
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="stockId">Stock ID</label>
+                            <input type="number" name="stockId" id="stockId" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="DateRapport">Date</label>
+                            <input type="date" name="DateRapport" id="DateRapport" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="MouvementDeStock">Mouvement</label>
+                            <input type="text" name="MouvementDeStock" id="MouvementDeStock" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="EtatStock">État Stock</label>
+                            <input type="text" name="EtatStock" id="EtatStock" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="Vente">Vente</label>
+                            <input type="text" name="Vente" id="Vente" required>
+                        </div>
+            
+                        <div class="form-group">
+                            <label for="Approvisionnement">Approvisionnement</label>
+                            <input type="text" name="Approvisionnement" id="Approvisionnement" required>
+                        </div>
+                    </div>
+            
+                    <div class="form-actions">
+                        <button type="submit">Ajouter</button>
+                    </div>
+                </form>
+            </div>
+
             <!-- Rapport Table Section -->
             <div class="rapport-container">
-                <div class="report-section">
-                    <h3>Liste des Rapports</h3>
-                    <table id="rapport-table">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Stock ID</th>
-                                <th>Date</th>
-                                <th>Mouvement</th>
-                                <th>État Stock</th>
-                                <th>Vente</th>
-                                <th>Approvisionnement</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for rapport in rapports %}
-                            <tr>
-                                <td>{{ rapport.id }}</td>
-                                <td>{{ rapport.stockId }}</td>
-                                <td>{{ rapport.DateRapport }}</td>
-                                <td>{{ rapport.MouvementDeStock }}</td>
-                                <td>{{ rapport.EtatStock }}</td>
-                                <td>{{ rapport.Vente }}</td>
-                                <td>{{ rapport.Approvisionnement }}</td>
-                                <td>
-                                    <a href="{% url 'update_rapport' rapport.id %}">Modifier</a> |
-                                    <form action="{% url 'delete_rapport' rapport.id %}" method="post" style="display:inline;">
-                                        {% csrf_token %}
-                                        <button type="submit" onclick="return confirm('Supprimer ce rapport ?');">Supprimer</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr><td colspan="8">Aucun rapport disponible.</td></tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+                <h3>Liste des Rapports</h3>
+                <table class="stock-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Stock ID</th>
+                            <th>Date</th>
+                            <th>Mouvement</th>
+                            <th>État Stock</th>
+                            <th>Vente</th>
+                            <th>Approvisionnement</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for rapport in rapports %}
+                        <tr>
+                            <td>{{ rapport.id }}</td>
+                            <td>{{ rapport.stockId }}</td>
+                            <td>{{ rapport.DateRapport }}</td>
+                            <td>{{ rapport.MouvementDeStock }}</td>
+                            <td>{{ rapport.EtatStock }}</td>
+                            <td>{{ rapport.Vente }}</td>
+                            <td>{{ rapport.Approvisionnement }}</td>
+                            <td>
+                                <a href="{% url 'update_rapport' rapport.id %}">Modifier</a> |
+                                <form action="{% url 'delete_rapport' rapport.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" onclick="return confirm('Supprimer ce rapport ?');">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="8">Aucun rapport disponible.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </main>
     </div>
 </body>
+
 </html>
