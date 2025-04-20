@@ -33,6 +33,7 @@ from stock.views import get_stocks
 from stock.views import create_stock
 from stock.views import delete_stock
 from stock.views import update_stock
+from pages.views import update_stock_view
 from article.views import get_articles
 from article.views import create_article
 from article.views import update_article
@@ -43,6 +44,7 @@ from rapport.views import get_rapports
 from rapport.views import create_rapport
 from rapport.views import delete_rapport
 from rapport.views import update_rapport
+from pages.views import update_rapport_view
 from .views import logout_view
 from stock.views import list_stocks
 from article.views import list_articles
@@ -63,6 +65,7 @@ urlpatterns = [
     path('createrapport', create_rapport, name='create_rapport'),
     path('deleterapport/<int:rapport_id>/', delete_rapport, name='delete_rapport'),
     path('updaterapport/<int:rapport_id>/', update_rapport, name='update_rapport'),
+    path('updaterapportview/<int:rapport_id>/', update_rapport_view, name='update_rapport_view'),
     path('gestionnaire',gestionnaire_view,name='gestionnaire_view'),
     path('auth',views.auth_view,name='auth_view'),
     path('employe',employe_view,name='employe_view'),
@@ -73,13 +76,14 @@ urlpatterns = [
     path('stocks/', get_stocks, name='get_stocks'),
     path('createstock', create_stock, name='create_stock'),
     path('deletestock/<int:stock_id>/', delete_stock, name='delete_stock'),
+    path('updatestockview/<int:stock_id>/', update_stock_view, name='update_stock_view'),  # Update (View)
     path('updatestock/<int:stock_id>/', update_stock, name='update_stock'),
     path('listarticles',list_articles,name='list_articles'),
     path('articles/', get_articles, name='get_articles'),
-    path('createarticle', create_article, name='create_article'),
-    path('deletearticle/<int:article_id>/', delete_article, name='delete_article'),
-    path('updatearticle/<int:article_id>/', update_article, name='update_article'),
-    path('updatearticleview/<int:article_id>/', update_article_view, name='update_article_view'),
+    path('createarticle/', create_article, name='create_article'),  # Create
+    path('updatearticleview/<int:article_id>/', update_article_view, name='update_article_view'),  # Update (View)
+    path('updatearticle/<int:article_id>/', update_article, name='update_article'),  # Update (Action)
+    path('deletearticle/<int:article_id>/', delete_article, name='delete_article'),  # Delete
     path('listcommands',get_commands,name='get_commands'),
     path('logout/', logout_view, name='logout_view'),
     ]
