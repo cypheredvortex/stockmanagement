@@ -1,0 +1,28 @@
+<h2>{% if stock %}Modifier{% else %}Ajouter{% endif %} un Stock</h2>
+<form method="POST" action="{% if stock %}{% url 'update_stock' stock.id %}{% else %}{% url 'create_stock' %}{% endif %}">
+    {% csrf_token %}
+    
+    <!-- Stock Field -->
+    <label for="stock">Stock</label>
+    <select id="stock" name="stock" required>
+        <option value="">-- Sélectionner un stock --</option>
+        {% for stock_item in stocks %}
+            <option value="{{ stock_item.id }}" {% if stock and stock.article.id == stock_item.id %}selected{% endif %}>
+                {{ stock_item.nom }}
+            </option>
+        {% endfor %}
+    </select>
+
+    <!-- Quantité Disponible -->
+    <label for="quantiteDisponible">Quantité Disponible</label>
+    <input type="number" id="quantiteDisponible" name="quantiteDisponible" 
+        value="{% if stock %}{{ stock.quantiteDisponible }}{% endif %}" required>
+
+    <!-- Seuil d'Alerte -->
+    <label for="seuilAlerte">Seuil d'Alerte</label>
+    <input type="number" id="seuilAlerte" name="seuilAlerte" 
+        value="{% if stock %}{{ stock.seuilAlerte }}{% endif %}" required>
+
+    <!-- Submit Button -->
+    <button type="submit">{% if stock %}Modifier{% else %}Ajouter{% endif %} le Stock</button>
+</form>
