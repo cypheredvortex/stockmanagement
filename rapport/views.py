@@ -1,5 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Rapport
+from datetime import datetime
+
 
 # Create your views here.
 def create_rapport(request):
@@ -11,18 +13,29 @@ def create_rapport(request):
         vente = request.POST.get('Vente')
         approvisionnement = request.POST.get('Approvisionnement')
 
-        # Creating the new Rapport object
-        rapport = Rapport.objects.create(
-            stockId=stock_id,
-            DateRapport=date_rapport,
-            MouvementDeStock=mouvement_de_stock,
-            EtatStock=etat_stock,
-            Vente=vente,
-            Approvisionnement=approvisionnement
-        )
-        return redirect('rapport_list')  # Redirect to the list of rapports after creation
+        try:
+            # Convert data types
+            stock_id = int(stock_id)
+            date_rapport = datetime.strptime(date_rapport, '%Y-%m-%d').date()
 
-    return render(request, 'rapport_form.html')  # Show the form for GET requests
+            # Create the Rapport object
+            Rapport.objects.create(
+                stockId=stock_id,
+                DateRapport=date_rapport,
+                MouvementDeStock=mouvement_de_stock,
+                EtatStock=etat_stock,
+                Vente=vente,
+                Approvisionnement=approvisionnement
+            )
+
+            return redirect('get_rapports')  # ✅ Make sure this name exists in your urls.py
+
+        except (ValueError, TypeError) as e:
+            return render(request, 'rapport_form.html', {
+                'error': f"Erreur lors de la soumission : {e}"
+            })
+
+    return render(request, 'rapport_form.html')
 
 def get_rapports(request):
     # Fetch all rapport data from the database
