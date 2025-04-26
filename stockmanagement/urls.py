@@ -48,6 +48,7 @@ from pages.views import update_rapport_view
 from .views import logout_view
 from stock.views import list_stocks
 from article.views import list_articles
+from pages.views import historique_view
 
 import debug_toolbar
 
@@ -56,7 +57,7 @@ urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
     path('',home_view,name='home_view'),
     path('articlesview',article_view,name='article_view'),
-    path('loginpage',loginpage_view,name='loginpage_view'),
+    path('loginpage/',loginpage_view,name='loginpage_view'),
     path('stockview',stock_view,name='stock_view'),
     path('fournisseurs',fournisseur_view,name='fournisseurs_view'),
     path('commands',commands_view,name='commands_view'),
@@ -86,4 +87,5 @@ urlpatterns = [
     path('deletearticle/<int:article_id>/', delete_article, name='delete_article'),  # Delete
     path('listcommands',get_commands,name='get_commands'),
     path('logout/', logout_view, name='logout_view'),
+    path('historique',historique_view,name='historique_view'),
     ]
