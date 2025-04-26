@@ -1,10 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from commande.models import Commande
-# Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
+
+# Helper to disable cache
+def disable_cache(response):
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
+
+@never_cache
+@login_required(login_url='/loginpage/')
 def get_commands(request):
-    # Fetching all commands from the database
-    commands = Commande.objects.all()
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
     
-    # Passing the commands data to the template
-    return render(request, 'commandes.html', {'commands': commands})
+    commands = Commande.objects.all()
+    response = render(request, 'listcommands.html', {'commands': commands})
+    return disable_cache(response)
