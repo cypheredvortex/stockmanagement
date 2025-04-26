@@ -3,6 +3,8 @@ from .models import Rapport
 from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
+from django.apps import apps
+
 
 # Helper to disable caching
 def disable_cache(response):
@@ -93,4 +95,22 @@ def delete_rapport(request, rapport_id):
         return redirect('rapport_list')
 
     response = render(request, 'rapport_confirm_delete.html', {'rapport': rapport})
+    return disable_cache(response)
+
+@never_cache
+@login_required(login_url='/loginpage/')
+def get_rapport_form(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
+    Rapport = apps.get_model('rapport', 'Rapport')
+    Stock = apps.get_model('stock', 'Stock')
+
+    rapports = Rapport.objects.all()
+    stocks = Stock.objects.all()
+
+    response = render(request, 'rapport_form.html', {  # <--- render to 'rapports_form.html'
+        'rapports': rapports,
+        'stocks': stocks,
+    })
     return disable_cache(response)
