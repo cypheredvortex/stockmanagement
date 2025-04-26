@@ -4,6 +4,9 @@ from django.apps import apps
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 
+from article.models import Article
+from stock.models import Stock
+
 # Helper to disable caching
 def disable_cache(response):
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
@@ -24,6 +27,24 @@ def get_stocks(request):
     articles = Article.objects.all()
 
     response = render(request, 'stocks.html', {
+        'stocks': stocks,
+        'articles': articles,
+    })
+    return disable_cache(response)
+
+@never_cache
+@login_required(login_url='/loginpage/')
+def get_stock_form(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
+    Stock = apps.get_model('stock', 'Stock')
+    Article = apps.get_model('article', 'Article')
+
+    stocks = Stock.objects.all()
+    articles = Article.objects.all()
+
+    response = render(request, 'stock_form.html', {  # <--- here 'stock_form.html'
         'stocks': stocks,
         'articles': articles,
     })
@@ -87,34 +108,46 @@ def create_stock(request):
 @never_cache
 @login_required(login_url='/loginpage/')
 def update_stock(request, stock_id):
-    if not request.user.is_authenticated:
-        return redirect('/loginpage/')
-
     Stock = apps.get_model('stock', 'Stock')
     Article = apps.get_model('article', 'Article')
 
     stock = get_object_or_404(Stock, id=stock_id)
+
     if request.method == 'POST':
         article_id = request.POST.get('article')
         quantite = request.POST.get('quantite')
         seuilAlerte = request.POST.get('seuilAlerte')
 
         try:
-            stock.article = Article.objects.get(id=article_id)
-            stock.quantiteDisponible = int(quantite)
-            stock.seuilAlerte = int(seuilAlerte)
+            article = Article.objects.get(id=article_id)
+            quantite = int(quantite)
+            seuilAlerte = int(seuilAlerte)
+
+            # Update the stock object
+            stock.article = article
+            stock.quantiteDisponible = quantite
+            stock.seuilAlerte = seuilAlerte
             stock.save()
+
             return redirect('get_stocks')
 
         except (ValueError, TypeError, Article.DoesNotExist):
             response = render(request, 'stocks.html', {
                 'stocks': Stock.objects.all(),
                 'articles': Article.objects.all(),
-                'error': 'Erreur lors de la mise à jour.'
+                'error': 'Erreur dans les champs du formulaire.'
             })
             return disable_cache(response)
 
-    return redirect('get_stocks')
+    # Handle GET request (user opens the edit page)
+    response = render(request, 'stock_form.html', {
+        'stocks': Stock.objects.all(),
+        'articles': Article.objects.all(),
+        'stock': stock,
+        'article': stock.article
+    })
+    return disable_cache(response)
+
 
 @never_cache
 @login_required(login_url='/loginpage/')
