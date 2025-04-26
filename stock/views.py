@@ -1,34 +1,54 @@
 # stock/views.py
 from django.shortcuts import render, get_object_or_404, redirect
 from django.apps import apps
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
-# Main view: renders to stocks.html (full management page)
+# Helper to disable caching
+def disable_cache(response):
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
+
+@never_cache
+@login_required(login_url='/loginpage/')
 def get_stocks(request):
-    # Dynamically fetch models using apps.get_model to avoid circular import
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     Stock = apps.get_model('stock', 'Stock')
     Article = apps.get_model('article', 'Article')
 
     stocks = Stock.objects.all()
     articles = Article.objects.all()
 
-    return render(request, 'stocks.html', {
+    response = render(request, 'stocks.html', {
         'stocks': stocks,
         'articles': articles,
     })
+    return disable_cache(response)
 
-# Partial view: renders to liststocks.html (list-only page)
+@never_cache
+@login_required(login_url='/loginpage/')
 def list_stocks(request):
-    # Dynamically fetch Stock model
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     Stock = apps.get_model('stock', 'Stock')
 
     stocks = Stock.objects.all()
-    return render(request, 'liststocks.html', {
+    response = render(request, 'liststocks.html', {
         'stocks': stocks,
     })
+    return disable_cache(response)
 
-# Create a new stock entry
+@never_cache
+@login_required(login_url='/loginpage/')
 def create_stock(request):
-    # Dynamically fetch models
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     Stock = apps.get_model('stock', 'Stock')
     Article = apps.get_model('article', 'Article')
 
@@ -48,24 +68,28 @@ def create_stock(request):
                 seuilAlerte=seuilAlerte
             )
 
-            return redirect('get_stocks')  # ✅ Assuming 'get_stocks' is the valid name
+            return redirect('get_stocks')
 
         except (ValueError, TypeError, Article.DoesNotExist):
-            return render(request, 'stocks.html', {
+            response = render(request, 'stocks.html', {
                 'stocks': Stock.objects.all(),
                 'articles': Article.objects.all(),
                 'error': 'Erreur dans les champs du formulaire.'
             })
+            return disable_cache(response)
 
-    # For GET request
-    return render(request, 'stocks.html', {
+    response = render(request, 'stocks.html', {
         'stocks': Stock.objects.all(),
         'articles': Article.objects.all()
     })
+    return disable_cache(response)
 
-# Update an existing stock
+@never_cache
+@login_required(login_url='/loginpage/')
 def update_stock(request, stock_id):
-    # Dynamically fetch Stock and Article models
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     Stock = apps.get_model('stock', 'Stock')
     Article = apps.get_model('article', 'Article')
 
@@ -83,18 +107,21 @@ def update_stock(request, stock_id):
             return redirect('get_stocks')
 
         except (ValueError, TypeError, Article.DoesNotExist):
-            return render(request, 'stocks.html', {
+            response = render(request, 'stocks.html', {
                 'stocks': Stock.objects.all(),
                 'articles': Article.objects.all(),
                 'error': 'Erreur lors de la mise à jour.'
             })
+            return disable_cache(response)
 
-    # If accessed via GET, redirect back
     return redirect('get_stocks')
 
-# Delete a stock
+@never_cache
+@login_required(login_url='/loginpage/')
 def delete_stock(request, stock_id):
-    # Dynamically fetch Stock model
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     Stock = apps.get_model('stock', 'Stock')
 
     stock = get_object_or_404(Stock, id=stock_id)
