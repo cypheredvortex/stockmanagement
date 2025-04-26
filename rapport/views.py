@@ -1,10 +1,22 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Rapport
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
+# Helper to disable caching
+def disable_cache(response):
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
 
-# Create your views here.
+@never_cache
+@login_required(login_url='/loginpage/')
 def create_rapport(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     if request.method == 'POST':
         stock_id = request.POST.get('stockId')
         date_rapport = request.POST.get('DateRapport')
@@ -14,11 +26,9 @@ def create_rapport(request):
         approvisionnement = request.POST.get('Approvisionnement')
 
         try:
-            # Convert data types
             stock_id = int(stock_id)
             date_rapport = datetime.strptime(date_rapport, '%Y-%m-%d').date()
 
-            # Create the Rapport object
             Rapport.objects.create(
                 stockId=stock_id,
                 DateRapport=date_rapport,
@@ -28,50 +38,59 @@ def create_rapport(request):
                 Approvisionnement=approvisionnement
             )
 
-            return redirect('get_rapports')  # ✅ Make sure this name exists in your urls.py
+            return redirect('get_rapports')
 
         except (ValueError, TypeError) as e:
-            return render(request, 'rapport_form.html', {
+            response = render(request, 'rapport_form.html', {
                 'error': f"Erreur lors de la soumission : {e}"
             })
+            return disable_cache(response)
 
-    return render(request, 'rapport_form.html')
+    response = render(request, 'rapport_form.html')
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def get_rapports(request):
-    # Fetch all rapport data from the database
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     rapports = Rapport.objects.all()
+    response = render(request, 'rapports.html', {'rapports': rapports})
+    return disable_cache(response)
 
-    # Pass the data to the template
-    return render(request, 'rapports.html', {'rapports': rapports})
-
+@never_cache
+@login_required(login_url='/loginpage/')
 def update_rapport(request, rapport_id):
-    # Get the rapport object using the provided rapport_id
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     rapport = get_object_or_404(Rapport, id=rapport_id)
 
     if request.method == 'POST':
-        # Fetch the updated data from the POST request and update the rapport
         rapport.stockId = request.POST.get('stockId')
         rapport.DateRapport = request.POST.get('DateRapport')
         rapport.MouvementDeStock = request.POST.get('MouvementDeStock')
         rapport.EtatStock = request.POST.get('EtatStock')
         rapport.Vente = request.POST.get('Vente')
         rapport.Approvisionnement = request.POST.get('Approvisionnement')
-
-        # Save the updated rapport to the database
         rapport.save()
+        return redirect('rapport_list')
 
-        return redirect('rapport_list')  # Redirect to the rapport list after updating
+    response = render(request, 'rapport_form.html', {'rapport': rapport})
+    return disable_cache(response)
 
-    return render(request, 'rapport_form.html', {'rapport': rapport})  # Display the form with existing data
-
-# Delete Rapport View
+@never_cache
+@login_required(login_url='/loginpage/')
 def delete_rapport(request, rapport_id):
-    # Get the rapport object using the provided rapport_id
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+
     rapport = get_object_or_404(Rapport, id=rapport_id)
 
     if request.method == 'POST':
-        # Delete the rapport object
         rapport.delete()
-        return redirect('rapport_list')  # Redirect to the list after deletion
+        return redirect('rapport_list')
 
-    return render(request, 'rapport_confirm_delete.html', {'rapport': rapport}) 
+    response = render(request, 'rapport_confirm_delete.html', {'rapport': rapport})
+    return disable_cache(response)
