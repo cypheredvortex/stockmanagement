@@ -2,27 +2,41 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.contrib import messages  # For feedback messages
 from django.apps import apps
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
+# Helper to disable cache
+def disable_cache(response):
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def list_articles(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
     Article = apps.get_model('article', 'Article')  # Dynamically fetch the Article model
     articles = Article.objects.all()
-    return render(request, 'listarticles.html', {
-        'articles': articles,
-    })
+    response = render(request, 'listarticles.html', {'articles': articles})
+    return disable_cache(response)
 
-
+@never_cache
+@login_required(login_url='/loginpage/')
 def get_articles(request):
-    Article = apps.get_model('article', 'Article')  # Dynamically fetch the Article model
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    Article = apps.get_model('article', 'Article')
     articles = Article.objects.all()
-    return render(request, 'articles.html', {'articles': articles})
+    response = render(request, 'articles.html', {'articles': articles})
+    return disable_cache(response)
 
-
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib import messages
-from django.apps import apps
-
+@never_cache
+@login_required(login_url='/loginpage/')
 def create_article(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
     if request.method == 'POST':
         nom = request.POST.get('nom')
         quantite = request.POST.get('quantite')
@@ -34,20 +48,23 @@ def create_article(request):
         # Basic validation
         if not nom or quantite is None:
             messages.error(request, "Nom and Quantité are required.")
-            return render(request, 'article_form.html')
+            response = render(request, 'article_form.html')
+            return disable_cache(response)
 
         try:
             quantite = int(quantite)
         except ValueError:
             messages.error(request, "Quantité must be a valid integer.")
-            return render(request, 'article_form.html')
+            response = render(request, 'article_form.html')
+            return disable_cache(response)
 
         if prix:
             try:
                 prix = float(prix)
             except ValueError:
                 messages.error(request, "Prix must be a valid number.")
-                return render(request, 'article_form.html')
+                response = render(request, 'article_form.html')
+                return disable_cache(response)
         else:
             prix = None
 
@@ -72,10 +89,14 @@ def create_article(request):
         messages.success(request, "Article created successfully.")
         return redirect('get_articles')
 
-    return render(request, 'article_form.html')
+    response = render(request, 'article_form.html')
+    return disable_cache(response)
 
-
+@never_cache
+@login_required(login_url='/loginpage/')
 def update_article(request, article_id):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
     Article = apps.get_model('article', 'Article')
     article = get_object_or_404(Article, pk=article_id)
 
@@ -115,10 +136,15 @@ def update_article(request, article_id):
         else:
             return HttpResponse("Champs requis manquants", status=400)
 
-    return render(request, 'article_form.html', {'article': article})
+    response = render(request, 'article_form.html', {'article': article})
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def delete_article(request, article_id):
-    Article = apps.get_model('article', 'Article')  # Dynamically fetch the Article model
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    Article = apps.get_model('article', 'Article')
     article = get_object_or_404(Article, pk=article_id)
 
     if request.method == 'POST':
@@ -126,4 +152,5 @@ def delete_article(request, article_id):
         messages.success(request, "Article deleted successfully.")
         return redirect('get_articles')
 
-    return render(request, 'article_confirm_delete.html', {'article': article})
+    response = render(request, 'article_confirm_delete.html', {'article': article})
+    return disable_cache(response)
