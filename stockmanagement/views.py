@@ -49,4 +49,4 @@ def auth_view(request):
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out.")
-    return redirect('/loginpage')
+    return redirect('loginpage_view')
