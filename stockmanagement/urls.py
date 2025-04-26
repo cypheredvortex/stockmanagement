@@ -49,6 +49,9 @@ from .views import logout_view
 from stock.views import list_stocks
 from article.views import list_articles
 from pages.views import historique_view
+from stock.views import get_stock_form
+# from pages.views import get_stock_form_view
+from rapport.views import get_rapport_form
 
 import debug_toolbar
 
@@ -63,6 +66,7 @@ urlpatterns = [
     path('commands',commands_view,name='commands_view'),
     path('rapportsview',rapport_view,name='rapport_view'),
     path('rapports/', get_rapports, name='get_rapports'),
+    path('rapportmodify/', get_rapport_form, name='get_rapport_form'),
     path('createrapport', create_rapport, name='create_rapport'),
     path('deleterapport/<int:rapport_id>/', delete_rapport, name='delete_rapport'),
     path('updaterapport/<int:rapport_id>/', update_rapport, name='update_rapport'),
@@ -75,6 +79,8 @@ urlpatterns = [
     path('liststocksview',liststocks_view,name='liststocks_view'),
     path('liststocks', list_stocks, name='list_stocks'),
     path('stocks/', get_stocks, name='get_stocks'),
+    path('stockmodify/', get_stock_form, name='get_stock_form'),
+    # path('stockmodifyview',get_stock_form_view,name='stockmodifyview'),
     path('createstock', create_stock, name='create_stock'),
     path('deletestock/<int:stock_id>/', delete_stock, name='delete_stock'),
     path('updatestockview/<int:stock_id>/', update_stock_view, name='update_stock_view'),  # Update (View)
