@@ -1,57 +1,130 @@
-from django.shortcuts import render
-from django.shortcuts import get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from article.models import Article
 from stock.models import Stock
 from rapport.models import Rapport
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
-# Create your views here.
 def home_view(request):
     return render(request, 'homepage.html')
-
-def article_view(request):
-    return render(request, 'articles.html')
-
-def stock_view(request):
-    return render(request, 'stocks.html')
 
 def loginpage_view(request):
     return render(request, 'loginpage.html')
 
-def signuppage_view(request):
-    return render(request, 'signup.html')
-
 def fournisseur_view(request):
     return render(request,'fournisseur.html')
 
+# Helper to disable cache
+def disable_cache(response):
+    response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response['Pragma'] = 'no-cache'
+    response['Expires'] = '0'
+    return response
+
+# Now apply everywhere
+@never_cache
+@login_required(login_url='/loginpage/')
+def article_view(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'articles.html')
+    return disable_cache(response)
+
+@never_cache
+@login_required(login_url='/loginpage/')
+def stock_view(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'stocks.html')
+    return disable_cache(response)
+
+@never_cache
+@login_required(login_url='/loginpage/')
 def commands_view(request):
-    return render(request,'commandes.html')
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'commandes.html')
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def rapport_view(request):
-    return render(request,'rapports.html')
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'rapports.html')
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
+def historique_view(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'historique.html')
+    return disable_cache(response)
+
+@never_cache
+@login_required(login_url='/loginpage/')
 def gestionnaire_view(request):
-    return render(request,'gestionnaire.html')
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'gestionnaire.html')
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def employe_view(request):
-    return render(request,'employe.html')
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'employe.html')
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def liststocks_view(request):
-    return render(request,'liststocks.html')    
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'liststocks.html')
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def listarticles_view(request):
-    return render(request,'listarticles.html')
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'listarticles.html')
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def listcommands_view(request):
-    return render(request,'listcommands.html')
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'listcommands.html')
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def update_article_view(request, article_id):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
     article = get_object_or_404(Article, pk=article_id)
-    return render(request, 'article_form.html', {'article': article})
+    response = render(request, 'article_form.html', {'article': article})
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def update_stock_view(request, stock_id):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
     stock = get_object_or_404(Stock, id=stock_id)
-    return render(request, 'stock_form.html', {'stock': stock})
+    response = render(request, 'stock_form.html', {'stock': stock})
+    return disable_cache(response)
 
+@never_cache
+@login_required(login_url='/loginpage/')
 def update_rapport_view(request, pk):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
     rapport = get_object_or_404(Rapport, pk=pk)
-    return render(request, 'rapport_form.html', {'rapport': rapport})
+    response = render(request, 'rapport_form.html', {'rapport': rapport})
+    return disable_cache(response)
