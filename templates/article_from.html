@@ -1,37 +1,213 @@
-<h2>{% if article %}Modifier{% else %}Ajouter{% endif %} un Article</h2>
-<form method="POST" action="{% url 'update_article' article.id %}">
-    {% csrf_token %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if article %}Modifier{% else %}Ajouter{% endif %} un Article</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9fafb;
+            color: #1f2937;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .dashboard {
+            display: flex;
+            width: 100%;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #111827;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            color: #f9fafb;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 40px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul li a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 1em;
+            padding: 12px 18px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a:hover {
+            background: #2563eb;
+            color: #ffffff;
+        }
+
+        .logout {
+            color: #f87171 !important;
+        }
+
+        .content {
+            margin-left: 450px;
+            padding: 40px;
+            width: 100%;
+            background: #f3f4f6;
+        }
+
+        .content h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #111827;
+        }
+
+        .article-form form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+        }
+
+        .article-form h2 {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        .article-form label {
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .article-form input {
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+
+        .article-form button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .article-form button:hover {
+            background: #059669;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .dashboard {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Gestion Stocks</h2>
+            <ul>
+                <li><a href="{% url 'get_stocks' %}">Stocks</a></li>
+                <li><a href="{% url 'get_articles' %}">Articles</a></li>
+                <li><a href="{% url 'get_rapports' %}">Rapports</a></li>
+                <li><a href="{% url 'historique_view' %}">Historique</a></li>
+                <li><a href="{% url 'logout_view' %}" class="logout">Déconnexion</a></li>
+            </ul>
+        </div>
     
-    <!-- Nom Field -->
-    <label for="nom">Nom</label>
-    <input type="text" id="nom" name="nom" 
-        value="{% if article %}{{ article.nom }}{% endif %}" required>
-
-    <!-- Quantité Field -->
-    <label for="quantite">Quantité</label>
-    <input type="number" id="quantite" name="quantite" 
-        value="{% if article %}{{ article.quantite }}{% endif %}" required>
-
-    <!-- Fournisseur (Supplier) Field -->
-    <label for="fournisseur">Fournisseur (ID)</label>
-    <input type="number" id="fournisseur" name="fournisseur" 
-        value="{% if article and article.fournisseur %}{{ article.fournisseur.id }}{% endif %}" placeholder="ID du fournisseur (facultatif)">
-
-    <!-- References Field (Optional) -->
-    <label for="references">Référence</label>
-    <input type="text" id="references" name="references" 
-        value="{% if article %}{{ article.references }}{% endif %}" placeholder="Référence de l'article (facultatif)">
-
-    <!-- Categorie Field (Optional) -->
-    <label for="categorie">Catégorie</label>
-    <input type="text" id="categorie" name="categorie" 
-        value="{% if article %}{{ article.categorie }}{% endif %}" placeholder="Catégorie de l'article (facultatif)">
-
-    <!-- Prix Field (Optional) -->
-    <label for="prix">Prix (€)</label>
-    <input type="number" id="prix" name="prix" step="0.01" 
-        value="{% if article %}{{ article.prix }}{% endif %}" placeholder="Prix de l'article (facultatif)">
-
-    <!-- Submit Button -->
-    <button type="submit">{% if article %}Modifier{% else %}Ajouter{% endif %} l'Article</button>
-</form>
+        <!-- Content -->
+        <div class="content">
+            <div class="article-form">
+                <h2>{% if article %}Modifier{% else %}Ajouter{% endif %} un Article</h2>
+                <form method="POST" action="{% if article %}{% url 'update_article' article.id %}{% else %}{% url 'create_article' %}{% endif %}">
+                    {% csrf_token %}
+    
+                    <!-- Nom -->
+                    <label for="nom">Nom</label>
+                    <input type="text" id="nom" name="nom" value="{% if article %}{{ article.nom }}{% endif %}" required>
+    
+                    <!-- Quantité -->
+                    <label for="quantite">Quantité</label>
+                    <input type="number" id="quantite" name="quantite" value="{% if article %}{{ article.quantite }}{% endif %}" required>
+    
+                    <!-- Fournisseur -->
+                    <label for="fournisseur">Fournisseur (ID)</label>
+                    <input type="number" id="fournisseur" name="fournisseur" value="{% if article and article.fournisseur %}{{ article.fournisseur.id }}{% endif %}" placeholder="ID du fournisseur (facultatif)">
+    
+                    <!-- Référence -->
+                    <label for="references">Référence</label>
+                    <input type="text" id="references" name="references" value="{% if article %}{{ article.references }}{% endif %}" placeholder="Référence de l'article (facultatif)">
+    
+                    <!-- Catégorie -->
+                    <label for="categorie">Catégorie</label>
+                    <input type="text" id="categorie" name="categorie" value="{% if article %}{{ article.categorie }}{% endif %}" placeholder="Catégorie de l'article (facultatif)">
+    
+                    <!-- Prix -->
+                    <label for="prix">Prix (€)</label>
+                    <input type="number" id="prix" name="prix" step="0.01" value="{% if article %}{{ article.prix }}{% endif %}" placeholder="Prix de l'article (facultatif)">
+    
+                    <!-- Description -->
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Description détaillée de l'article (facultatif)">{% if article %}{{ article.description }}{% endif %}</textarea>
+    
+                    <!-- Etat -->
+                    <label for="etat">État</label>
+                    <select id="etat" name="etat">
+                        <option value="en_stock" {% if article and article.etat == 'en_stock' %}selected{% endif %}>En stock</option>
+                        <option value="hors_stock" {% if article and article.etat == 'hors_stock' %}selected{% endif %}>Hors stock</option>
+                    </select>
+    
+                    <!-- Submit -->
+                    <button type="submit">{% if article %}Modifier{% else %}Ajouter{% endif %} l'Article</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </body>
+    
+</html>
