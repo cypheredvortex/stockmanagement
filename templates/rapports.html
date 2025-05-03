@@ -11,234 +11,272 @@
 
     <style>
         /* General Layout */
-body {
-    font-family: "Roboto", sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f9fafb;
-    color: #1f2937;
-    display: flex;
-    min-height: 100vh;
-}
+        body {
+            font-family: "Roboto", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9fafb;
+            color: #1f2937;
+            display: flex;
+            min-height: 100vh;
+        }
 
-.dashboard {
-    display: flex;
-    width: 100%;
-}
+        .dashboard {
+            display: flex;
+            width: 100%;
+        }
 
-/* Sidebar */
-.sidebar {
-    width: 250px;
-    height: 100vh;
-    background: #111827;
-    padding: 30px 20px;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    left: 0;
-    top: 0;
-    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
-}
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #111827;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+        }
 
-.sidebar h2 {
-    color: #f9fafb;
-    text-align: center;
-    font-size: 1.8em;
-    margin-bottom: 40px;
-}
+        .sidebar h2 {
+            color: #f9fafb;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 40px;
+        }
 
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
 
-.sidebar ul li {
-    margin-bottom: 20px;
-}
+        .sidebar ul li {
+            margin-bottom: 20px;
+        }
 
-.sidebar ul li a {
-    color: #d1d5db;
-    text-decoration: none;
-    font-size: 1em;
-    padding: 12px 18px;
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    transition: 0.3s;
-}
+        .sidebar ul li a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 1em;
+            padding: 12px 18px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
 
-.sidebar ul li a i {
-    margin-right: 12px;
-}
+        .sidebar ul li a i {
+            margin-right: 12px;
+        }
 
-.sidebar ul li a:hover {
-    background: #2563eb;
-    color: #ffffff;
-}
+        .sidebar ul li a:hover {
+            background: #2563eb;
+            color: #ffffff;
+        }
 
-.logout {
-    color: #f87171 !important;
-}
+        .logout {
+            color: #f87171 !important;
+        }
 
-/* Content */
-.content {
-    margin-left: 270px;
-    padding: 40px;
-    width: 100%;
-    background: #f3f4f6;
-}
+        /* Content */
+        .content {
+            margin-left: 270px;
+            padding: 40px;
+            width: 100%;
+            background: #f3f4f6;
+        }
 
-.content h2,
-.content h3 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-    color: #111827;
-}
+        .content h2,
+        .content h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #111827;
+        }
 
-/* Form Styling */
-.rapport-form {
-    background: #ffffff;
-    padding: 24px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    margin-bottom: 40px;
-    max-width: 700px;
-}
+        /* Form Styling */
+        .rapport-form {
+            background: #ffffff;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
 
-.rapport-form h3 {
-    font-size: 1.4em;
-    margin-bottom: 20px;
-    color: #111827;
-}
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
 
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 20px;
-}
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
+        .form-group label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
 
-.form-group label {
-    font-weight: 500;
-    margin-bottom: 8px;
-}
+        .form-group input {
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #fff;
+        }
 
-.form-group input {
-    padding: 10px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    font-size: 1em;
-    background: #fff;
-}
+        .form-actions {
+            margin-top: 30px;
+            text-align: right;
+        }
 
-.form-actions {
-    margin-top: 30px;
-    text-align: right;
-}
+        .form-actions button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
 
-.form-actions button {
-    background: #10b981;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 8px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
+        .form-actions button:hover {
+            background: #059669;
+        }
 
-.form-actions button:hover {
-    background: #059669;
-}
-/* Table Styling */
-.rapport-container table,
-.stocks-list table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #ffffff;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
-}
+        /* Rapport Header */
+        .rapport-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
 
-.rapport-container th,
-.rapport-container td,
-.stocks-list th,
-.stocks-list td {
-    padding: 18px 20px;
-    text-align: left;
-    border-bottom: 1px solid #e5e7eb;
-}
+        .rapport-header h3 {
+            font-size: 1.4em;
+            color: #111827;
+        }
 
-.rapport-container th,
-.stocks-list th {
-    background: #f1f5f9;
-    color: #1e293b;
-    font-weight: 600;
-}
+        .rapport-actions {
+            display: flex;
+            gap: 16px;
+        }
 
-.rapport-container tbody tr:hover,
-.stocks-list tbody tr:hover {
-    background: #f9fafb;
-}
+        .rapport-actions button {
+            background: #3b82f6;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
 
-.rapport-container td,
-.stocks-list td {
-    color: #374151;
-}
+        .rapport-actions button:hover {
+            background: #2563eb;
+        }
 
-.rapport-container a,
-.stocks-list a {
-    color: #2563eb;
-    text-decoration: none;
-    margin-right: 10px;
-}
+        /* Table Styling */
+        .rapport-container table,
+        .stocks-list table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+        }
 
-.rapport-container form,
-.stocks-list form {
-    display: inline;
-}
+        .rapport-container th,
+        .rapport-container td,
+        .stocks-list th,
+        .stocks-list td {
+            padding: 18px 20px;
+            text-align: left;
+            border-bottom: 1px solid #e5e7eb;
+        }
 
-.rapport-container button,
-.stocks-list button {
-    background: transparent;
-    color: #ef4444;
-    border: none;
-    cursor: pointer;
-    font-size: 0.95em;
-}
+        .rapport-container th,
+        .stocks-list th {
+            background: #f1f5f9;
+            color: #1e293b;
+            font-weight: 600;
+        }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-    }
+        .rapport-container tbody tr:hover,
+        .stocks-list tbody tr:hover {
+            background: #f9fafb;
+        }
 
-    .content {
-        margin-left: 0;
-        padding: 20px;
-    }
+        .rapport-container td,
+        .stocks-list td {
+            color: #374151;
+        }
 
-    .dashboard {
-        flex-direction: column;
-    }
+        .rapport-container a,
+        .stocks-list a {
+            color: #2563eb;
+            text-decoration: none;
+            margin-right: 10px;
+        }
 
-    .rapport-form,
-    .stock-actions form {
-        width: 100%;
-    }
+        .rapport-container form,
+        .stocks-list form {
+            display: inline;
+        }
 
-    .rapport-container table {
-        font-size: 0.9em;
-    }
-}
+        .rapport-container button,
+        .stocks-list button {
+            background: transparent;
+            color: #ef4444;
+            border: none;
+            cursor: pointer;
+            font-size: 0.95em;
+        }
 
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .rapport-form,
+            .stock-actions form {
+                width: 100%;
+            }
+
+            .rapport-container table {
+                font-size: 0.9em;
+            }
+
+            .rapport-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .rapport-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
     </style>
 </head>
 <body>
@@ -260,41 +298,49 @@ body {
 
             <!-- Create Rapport Form -->
             <div class="rapport-form">
-                <h3>Ajouter un Rapport</h3>
-                <form method="POST" action="{% url 'create_rapport' %}">
+                <div class="rapport-header">
+                    <h3>Générer un Rapport</h3>
+                    <div class="rapport-actions">
+                        <a href="{% url 'rapport_pdf' %}" target="_blank">
+                            <button type="button">Télécharger le rapport PDF</button>
+                        </a>
+                    </div>
+                </div>
+
+                <form id="form-ajout" method="POST" action="{% url 'create_rapport' %}">
                     {% csrf_token %}
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="stockId">Stock ID</label>
                             <input type="number" name="stockId" id="stockId" required>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="DateRapport">Date</label>
                             <input type="date" name="DateRapport" id="DateRapport" required>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="MouvementDeStock">Mouvement</label>
                             <input type="text" name="MouvementDeStock" id="MouvementDeStock" required>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="EtatStock">État Stock</label>
                             <input type="text" name="EtatStock" id="EtatStock" required>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="Vente">Vente</label>
                             <input type="text" name="Vente" id="Vente" required>
                         </div>
-            
+
                         <div class="form-group">
                             <label for="Approvisionnement">Approvisionnement</label>
                             <input type="text" name="Approvisionnement" id="Approvisionnement" required>
                         </div>
                     </div>
-            
+
                     <div class="form-actions">
                         <button type="submit">Ajouter</button>
                     </div>
@@ -344,5 +390,4 @@ body {
         </main>
     </div>
 </body>
-
 </html>
