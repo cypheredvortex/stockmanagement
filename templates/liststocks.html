@@ -141,7 +141,7 @@
 <body>
     <div class="dashboard">
         <!-- Sidebar Navigation -->
-        <aside class="sidebar">
+      <aside class="sidebar">
             <h2><a href="{% url 'liststocks_view' %}" style="color: inherit; text-decoration: none;">Gestion de Stock</a></h2>
             <ul>
                 <li><a href="{% url 'list_stocks' %}"><i class="fas fa-box"></i> Stocks</a></li>
@@ -149,7 +149,7 @@
                 <li><a href="{% url 'get_commands' %}"><i class="fas fa-shopping-cart"></i> Commandes</a></li>
                 <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
             </ul>
-        </aside>
+        </aside> 
 
         <!-- Main Content -->
         <main class="content">
@@ -162,6 +162,10 @@
                         <th>Article</th>
                         <th>Quantité Disponible</th>
                         <th>Seuil d'Alerte</th>
+                        <th>Type</th>
+                        <th>État du Stock</th>
+                        <th>Utilisateur</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -171,10 +175,14 @@
                             <td>{{ stock.article.nom }}</td>
                             <td>{{ stock.quantiteDisponible }}</td>
                             <td>{{ stock.seuilAlerte }}</td>
+                            <td>{{ stock.type }}</td>
+                            <td>{{ stock.etatStock }}</td>
+                            <td>{{ stock.utilisateur.username }}</td>
+                            <td>{{ stock.date }}</td>
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="4">Aucun stock trouvé.</td>
+                            <td colspan="8">Aucun stock trouvé.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
