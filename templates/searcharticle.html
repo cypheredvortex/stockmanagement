@@ -304,6 +304,7 @@
                             <th>Catégorie</th>
                             <th>Prix (€)</th>
                             <th>Quantité Disponible</th>
+                            <th>État</th>
                             <th>Fournisseur</th>
                             <th>Actions</th>
                         </tr>
@@ -316,6 +317,7 @@
                                 <td>{{ article.categorie }}</td>
                                 <td>{{ article.prix }}</td>
                                 <td>{{ article.quantite }}</td>
+                                <td>{{ article.etat|capfirst }}</td> <!-- Display 'en_stock' or 'hors_stock' properly -->
                                 <td>
                                     {% if article.fournisseur %}
                                         {{ article.fournisseur.nom }}
@@ -332,7 +334,7 @@
                                 </td>
                             </tr>
                         {% empty %}
-                            <tr><td colspan="7">Aucun article disponible.</td></tr>
+                            <tr><td colspan="8">Aucun article disponible.</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
