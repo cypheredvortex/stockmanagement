@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Rapports - Stock Management System</title>
 
     <!-- Roboto Font & Font Awesome -->
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 
     <style>
-        /* General Layout */
+        /* Global Styles */
         body {
             font-family: "Roboto", sans-serif;
             margin: 0;
@@ -20,12 +20,13 @@
             display: flex;
             min-height: 100vh;
         }
-
+    
         .dashboard {
             display: flex;
             width: 100%;
+            position: relative;
         }
-
+    
         /* Sidebar */
         .sidebar {
             width: 250px;
@@ -39,23 +40,23 @@
             top: 0;
             box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
         }
-
+    
         .sidebar h2 {
             color: #f9fafb;
             text-align: center;
             font-size: 1.8em;
             margin-bottom: 40px;
         }
-
+    
         .sidebar ul {
             list-style: none;
             padding: 0;
         }
-
+    
         .sidebar ul li {
             margin-bottom: 20px;
         }
-
+    
         .sidebar ul li a {
             color: #d1d5db;
             text-decoration: none;
@@ -66,125 +67,71 @@
             align-items: center;
             transition: 0.3s;
         }
-
+    
         .sidebar ul li a i {
             margin-right: 12px;
         }
-
+    
         .sidebar ul li a:hover {
             background: #2563eb;
             color: #ffffff;
         }
-
-        .logout {
-            color: #f87171 !important;
-        }
-
-        /* Content */
+    
+        /* Main Content */
         .content {
             margin-left: 270px;
             padding: 40px;
             width: 100%;
             background: #f3f4f6;
         }
-
-        .content h2,
-        .content h3 {
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            color: #111827;
-        }
-
-        /* Form Styling */
-        .rapport-form {
-            background: #ffffff;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            margin-bottom: 40px;
-            max-width: 700px;
-        }
-
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-        }
-
-        .form-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .form-group label {
-            font-weight: 500;
-            margin-bottom: 8px;
-        }
-
-        .form-group input {
-            padding: 10px 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 1em;
-            background: #fff;
-        }
-
-        .form-actions {
-            margin-top: 30px;
-            text-align: right;
-        }
-
-        .form-actions button {
-            background: #10b981;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-size: 1em;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .form-actions button:hover {
-            background: #059669;
-        }
-
-        /* Rapport Header */
-        .rapport-header {
+    
+        .content-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 24px;
+            margin-bottom: 30px;
         }
-
-        .rapport-header h3 {
-            font-size: 1.4em;
-            color: #111827;
+    
+        .content-header h2 {
+            font-size: 2em;
+            margin: 0;
         }
-
-        .rapport-actions {
+    
+        .actions {
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
-
-        .rapport-actions button {
-            background: #3b82f6;
+    
+        #searchInput {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+    
+        .btn-add {
+            background: #1abc9c;
             color: white;
+            padding: 12px 20px;
             border: none;
-            padding: 10px 18px;
             border-radius: 8px;
             font-size: 1em;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: background 0.3s;
         }
-
-        .rapport-actions button:hover {
-            background: #2563eb;
+    
+        .btn-add:hover {
+            background: #16a085;
         }
-
+    
         /* Table Styling */
-        .rapport-container table,
-        .stocks-list table {
+        .table-container {
+            overflow-x: auto;
+        }
+    
+        table {
             width: 100%;
             border-collapse: collapse;
             background: #ffffff;
@@ -192,174 +139,182 @@
             overflow: hidden;
             box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
         }
-
-        .rapport-container th,
-        .rapport-container td,
-        .stocks-list th,
-        .stocks-list td {
-            padding: 18px 20px;
+    
+        th, td {
+            padding: 16px 20px;
             text-align: left;
             border-bottom: 1px solid #e5e7eb;
         }
-
-        .rapport-container th,
-        .stocks-list th {
+    
+        th {
             background: #f1f5f9;
             color: #1e293b;
             font-weight: 600;
         }
-
-        .rapport-container tbody tr:hover,
-        .stocks-list tbody tr:hover {
-            background: #f9fafb;
-        }
-
-        .rapport-container td,
-        .stocks-list td {
+    
+        td {
             color: #374151;
         }
-
-        .rapport-container a,
-        .stocks-list a {
+    
+        table tbody tr:hover {
+            background: #f9fafb;
+        }
+    
+        td a,
+        td button {
             color: #2563eb;
             text-decoration: none;
-            margin-right: 10px;
-        }
-
-        .rapport-container form,
-        .stocks-list form {
-            display: inline;
-        }
-
-        .rapport-container button,
-        .stocks-list button {
-            background: transparent;
-            color: #ef4444;
+            font-weight: 500;
+            background: none;
             border: none;
             cursor: pointer;
-            font-size: 0.95em;
         }
-
-        /* Responsive */
+    
+        td a:hover,
+        td button:hover {
+            text-decoration: underline;
+        }
+    
+        .delete-form {
+            display: inline;
+        }
+    
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+    
+        .modal-content {
+            background-color: #ffffff;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 500px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            position: relative;
+        }
+    
+        .modal-content h3 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+    
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+    
+        .form-grid input,
+        .form-grid select,
+        .form-grid textarea {
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+    
+        .btn-submit {
+            background: #2563eb;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+    
+        .btn-submit:hover {
+            background: #1d4ed8;
+        }
+    
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
                 height: auto;
                 position: relative;
             }
-
+    
             .content {
                 margin-left: 0;
                 padding: 20px;
             }
-
+    
             .dashboard {
                 flex-direction: column;
             }
-
-            .rapport-form,
-            .stock-actions form {
-                width: 100%;
-            }
-
-            .rapport-container table {
-                font-size: 0.9em;
-            }
-
-            .rapport-header {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-
-            .rapport-actions {
-                width: 100%;
-                justify-content: flex-start;
+    
+            .modal-content {
+                width: 90%;
             }
         }
     </style>
+    
 </head>
 <body>
     <div class="dashboard">
-        <!-- Sidebar Navigation -->
+        <!-- Sidebar -->
         <aside class="sidebar">
             <h2><a href="{% url 'get_stocks' %}" style="color: inherit; text-decoration: none;">Gestion de Stock</a></h2>
             <ul>
+                <li><a href="{% url 'dashboard_view' %}"><i class="fas fa-box"></i> Dashboard</a></li>
                 <li><a href="{% url 'get_stocks' %}"><i class="fas fa-box"></i> Stocks</a></li>
                 <li><a href="{% url 'get_articles' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
                 <li><a href="{% url 'get_rapports' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
-                <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                <li><a href="{% url 'gethistorique_view' %}"><i class="fas fa-history"></i> Historique</a></li>
+                <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Se Déconnecter</a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="content">
-            <h2>Génération de Rapports</h2>
-
-            <!-- Create Rapport Form -->
-            <div class="rapport-form">
-                <div class="rapport-header">
-                    <h3>Générer un Rapport</h3>
-                    <div class="rapport-actions">
-                        <a href="{% url 'rapport_pdf' %}" target="_blank">
-                            <button type="button">Télécharger le rapport PDF</button>
-                        </a>
-                    </div>
+            <div class="content-header">
+                <h2>Rapports</h2>
+                <div class="actions">
+                    <input type="text" id="searchInput" placeholder="Rechercher..." onkeyup="filterTable()">
+                    <button class="btn-add" onclick="toggleModal()">+ Ajouter</button>
                 </div>
-
-                <form id="form-ajout" method="POST" action="{% url 'create_rapport' %}">
-                    {% csrf_token %}
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="stockId">Stock ID</label>
-                            <input type="number" name="stockId" id="stockId" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="DateRapport">Date</label>
-                            <input type="date" name="DateRapport" id="DateRapport" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="MouvementDeStock">Mouvement</label>
-                            <input type="text" name="MouvementDeStock" id="MouvementDeStock" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="EtatStock">État Stock</label>
-                            <input type="text" name="EtatStock" id="EtatStock" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Vente">Vente</label>
-                            <input type="text" name="Vente" id="Vente" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="Approvisionnement">Approvisionnement</label>
-                            <input type="text" name="Approvisionnement" id="Approvisionnement" required>
-                        </div>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit">Ajouter</button>
-                    </div>
-                </form>
             </div>
-
-            <!-- Rapport Table Section -->
-            <div class="rapport-container">
-                <h3>Liste des Rapports</h3>
-                <table class="stock-table">
+        
+            <!-- Table -->
+            <div class="table-container">
+                <table id="rapportTable">
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Article</th>
+                            <th>Référence Article</th>
+                            <th>Catégorie Article</th>
                             <th>Stock ID</th>
                             <th>Date</th>
                             <th>Mouvement</th>
                             <th>État Stock</th>
                             <th>Vente</th>
                             <th>Approvisionnement</th>
+                            <th>Type</th>
+                            <th>Contenu</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -367,27 +322,95 @@
                         {% for rapport in rapports %}
                         <tr>
                             <td>{{ rapport.id }}</td>
-                            <td>{{ rapport.stockId }}</td>
-                            <td>{{ rapport.DateRapport }}</td>
-                            <td>{{ rapport.MouvementDeStock }}</td>
-                            <td>{{ rapport.EtatStock }}</td>
-                            <td>{{ rapport.Vente }}</td>
-                            <td>{{ rapport.Approvisionnement }}</td>
+                            <td>{{ rapport.stock.article.nom }}</td> <!-- Access Article Name -->
+                            <td>{{ rapport.stock.article.references }}</td> <!-- Access Article Reference -->
+                            <td>{{ rapport.stock.article.categorie }}</td> <!-- Access Article Category -->
+                            <td>{{ rapport.stock.id }}</td> <!-- Access Stock ID -->
+                            <td>{{ rapport.dateRapport }}</td>
+                            <td>{{ rapport.stock.type }}</td>
+                            <td>{{ rapport.stock.etatStock }}</td>
+                            <td>{{ rapport.vente }}</td>
+                            <td>{{ rapport.approvisionnement }}</td>
+                            <td>{{ rapport.type_rapport }}</td>
+                            <td>{{ rapport.contenu }}</td>
                             <td>
-                                <a href="{% url 'update_rapport' rapport.id %}">Modifier</a> |
-                                <form action="{% url 'delete_rapport' rapport.id %}" method="post" style="display:inline;">
+                                <a href="{% url 'get_rapport_form' %}?id={{ rapport.id }}" class="edit-link">Modifier</a>
+                                |
+                                <form method="POST" action="{% url 'delete_rapport' rapport.id %}" class="delete-form">
                                     {% csrf_token %}
                                     <button type="submit" onclick="return confirm('Supprimer ce rapport ?');">Supprimer</button>
                                 </form>
                             </td>
                         </tr>
                         {% empty %}
-                        <tr><td colspan="8">Aucun rapport disponible.</td></tr>
+                        <tr><td colspan="13">Aucun rapport disponible.</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
+            
         </main>
-    </div>
+        
+        <!-- Modal Form -->
+        <div id="rapportModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="toggleModal()">&times;</span>
+                <h3>Ajouter un Rapport</h3>
+                <form method="POST" action="{% url 'create_rapport' %}">
+                    {% csrf_token %}
+                    <div class="form-grid">
+                        <!-- Stock ID -->
+                        <input type="number" name="stockId" placeholder="Stock ID" required>
+        
+                        <!-- Date of Report -->
+                        <input type="date" name="dateRapport" required>
+        
+                        <!-- Stock Movement -->
+                        <input type="text" name="mouvementDeStock" placeholder="Mouvement" required>
+        
+                        <!-- Stock State -->
+                        <input type="text" name="etatStock" placeholder="État Stock" required>
+        
+                        <!-- Sales -->
+                        <input type="text" name="vente" placeholder="Vente" required>
+        
+                        <!-- Supply -->
+                        <input type="text" name="approvisionnement" placeholder="Approvisionnement" required>
+        
+                        <!-- Report Type -->
+                        <select name="type_rapport" required>
+                            <option value="">Type de Rapport</option>
+                            <option value="journalier">Journalier</option>
+                            <option value="hebdomadaire">Hebdomadaire</option>
+                            <option value="mensuel">Mensuel</option>
+                        </select>
+        
+                        <!-- Report Content -->
+                        <textarea name="contenu" rows="4" placeholder="Contenu du Rapport" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">Ajouter</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Scripts -->
+        <script>
+            function toggleModal() {
+                const modal = document.getElementById("rapportModal");
+                modal.style.display = modal.style.display === "block" ? "none" : "block";
+            }
+        
+            function filterTable() {
+                const input = document.getElementById("searchInput").value.toLowerCase();
+                const rows = document.querySelectorAll("#rapportTable tbody tr");
+        
+                rows.forEach(row => {
+                    const text = row.innerText.toLowerCase();
+                    row.style.display = text.includes(input) ? "" : "none";
+                });
+            }
+        </script>
+        
 </body>
+
 </html>
