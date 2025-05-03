@@ -120,6 +120,14 @@
             color: #374151;
         }
 
+        .etat-en-stock {
+            color: green;
+        }
+
+        .etat-hors-stock {
+            color: red;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -162,6 +170,7 @@
                         <th>Catégorie</th>
                         <th>Prix</th>
                         <th>Quantité</th>
+                        <th>Etat</th>
                         <th>Fournisseur</th>
                     </tr>
                 </thead>
@@ -179,6 +188,13 @@
                                 {% endif %}
                             </td>
                             <td>{{ article.quantite }}</td>
+                            <td class="{% if article.etat == 'en_stock' %}etat-en-stock{% else %}etat-hors-stock{% endif %}">
+                                {% if article.etat == 'en_stock' %}
+                                    En stock
+                                {% else %}
+                                    Hors stock
+                                {% endif %}
+                            </td>
                             <td>
                                 {% if article.fournisseur %}
                                     {{ article.fournisseur.nom }}
@@ -189,13 +205,12 @@
                         </tr>
                     {% empty %}
                         <tr>
-                            <td colspan="6">Aucun article disponible.</td>
+                            <td colspan="7">Aucun article disponible.</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </main>
     </div>
-    
 </body>
 </html>
