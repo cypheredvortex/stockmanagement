@@ -1,44 +1,224 @@
-<h2>{% if rapport %}Modifier{% else %}Ajouter{% endif %} un Rapport</h2>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if rapport %}Modifier{% else %}Ajouter{% endif %} un Rapport</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: "Roboto", sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9fafb;
+            color: #1f2937;
+            display: flex;
+            min-height: 100vh;
+        }
 
-<form method="POST" action="{% if rapport %}{% url 'update_rapport' rapport.id %}{% else %}{% url 'create_rapport' %}{% endif %}">
-    {% csrf_token %}
+        .dashboard {
+            display: flex;
+            width: 100%;
+        }
 
-    <!-- Stock ID (select from stocks) -->
-    <label for="stockId">Stock</label>
-    <select id="stockId" name="stockId" required>
-        <option value="">-- Sélectionner un stock --</option>
-        {% for stock in stocks %}
-            <option value="{{ stock.id }}" {% if rapport and rapport.stockId == stock.id %}selected{% endif %}>
-                {{ stock.nom }}
-            </option>
-        {% endfor %}
-    </select>
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background: #111827;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+        }
 
-    <!-- DateRapport -->
-    <label for="DateRapport">Date</label>
-    <input type="date" id="DateRapport" name="DateRapport"
-           value="{% if rapport %}{{ rapport.DateRapport|date:'Y-m-d' }}{% endif %}" required>
+        .sidebar h2 {
+            color: #f9fafb;
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 40px;
+        }
 
-    <!-- MouvementDeStock -->
-    <label for="MouvementDeStock">Mouvement</label>
-    <input type="text" id="MouvementDeStock" name="MouvementDeStock"
-           value="{% if rapport %}{{ rapport.MouvementDeStock }}{% endif %}" required>
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
 
-    <!-- EtatStock -->
-    <label for="EtatStock">État Stock</label>
-    <input type="text" id="EtatStock" name="EtatStock"
-           value="{% if rapport %}{{ rapport.EtatStock }}{% endif %}" required>
+        .sidebar ul li {
+            margin-bottom: 20px;
+        }
 
-    <!-- Vente -->
-    <label for="Vente">Vente</label>
-    <input type="text" id="Vente" name="Vente"
-           value="{% if rapport %}{{ rapport.Vente }}{% endif %}" required>
+        .sidebar ul li a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-size: 1em;
+            padding: 12px 18px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
 
-    <!-- Approvisionnement -->
-    <label for="Approvisionnement">Approvisionnement</label>
-    <input type="text" id="Approvisionnement" name="Approvisionnement"
-           value="{% if rapport %}{{ rapport.Approvisionnement }}{% endif %}" required>
+        .sidebar ul li a:hover {
+            background: #2563eb;
+            color: #ffffff;
+        }
 
-    <!-- Submit Button -->
-    <button type="submit">{% if rapport %}Modifier{% else %}Ajouter{% endif %} le Rapport</button>
-</form>
+        .logout {
+            color: #f87171 !important;
+        }
+
+        .content {
+            margin-left: 500px;
+            padding: 40px;
+            width: 100%;
+            background: #f3f4f6;
+        }
+
+        .content h2 {
+            font-size: 2em;
+            margin-bottom: 30px;
+            color: #111827;
+        }
+
+        .stock-actions form {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        .stock-actions h2 {
+            font-size: 1.6em;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        .stock-actions label {
+            font-weight: 500;
+            color: #374151;
+        }
+
+        .stock-actions input,
+        .stock-actions select {
+            padding: 10px 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1em;
+            background: #f9fafb;
+            color: #1f2937;
+        }
+
+        .stock-actions button {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .stock-actions button:hover {
+            background: #059669;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+
+            .content {
+                margin-left: 0;
+                padding: 20px;
+            }
+
+            .dashboard {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>Gestion Stocks</h2>
+            <ul>
+                <li><a href="{% url 'get_stocks' %}">Stocks</a></li>
+                <li><a href="{% url 'get_articles' %}">Articles</a></li>
+                <li><a href="{% url 'get_rapports' %}">Rapports</a></li>
+                <li><a href="{% url 'historique_view' %}">Historique</a></li>
+                <li><a href="{% url 'logout_view' %}" class="logout">Déconnexion</a></li>
+            </ul>
+        </div>
+    
+        <!-- Content -->
+        <div class="content">
+            <div class="stock-actions">
+                <h2>Ajouter un Rapport</h2>
+                <form method="POST" action="{% url 'create_rapport' %}">
+                    {% csrf_token %}
+        
+                    <!-- Stock ID -->
+                    <label for="stockId">Stock</label>
+                    <select id="stockId" name="stockId" required>
+                        <option value="">-- Sélectionner un stock --</option>
+                        {% for stock in stocks %}
+                            <option value="{{ stock.id }}">
+                                {{ stock.article.nom }} <!-- Display the article's name -->
+                            </option>
+                        {% endfor %}
+                    </select>
+        
+                    <!-- DateRapport -->
+                    <label for="dateRapport">Date</label>
+                    <input type="date" id="dateRapport" name="dateRapport" required>
+        
+                    <!-- MouvementDeStock -->
+                    <label for="mouvementDeStock">Mouvement</label>
+                    <input type="text" id="mouvementDeStock" name="mouvementDeStock" required>
+        
+                    <!-- EtatStock -->
+                    <label for="etatStock">État Stock</label>
+                    <input type="text" id="etatStock" name="etatStock" required>
+        
+                    <!-- Vente -->
+                    <label for="vente">Vente</label>
+                    <input type="text" id="vente" name="vente" required>
+        
+                    <!-- Approvisionnement -->
+                    <label for="approvisionnement">Approvisionnement</label>
+                    <input type="text" id="approvisionnement" name="approvisionnement" required>
+        
+                    <!-- Type de Rapport -->
+                    <label for="type_rapport">Type de Rapport</label>
+                    <select id="type_rapport" name="type_rapport" required>
+                        <option value="journalier">Journalier</option>
+                        <option value="hebdomadaire">Hebdomadaire</option>
+                        <option value="mensuel">Mensuel</option>
+                    </select>
+        
+                    <!-- Contenu du Rapport -->
+                    <label for="contenu">Contenu</label>
+                    <textarea id="contenu" name="contenu" rows="4" required></textarea>
+        
+                    <!-- Submit Button -->
+                    <button type="submit">Ajouter le Rapport</button>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</body>
+    
+</html>
