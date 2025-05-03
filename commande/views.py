@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from commande.models import Commande
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
-
+from user.models import UserProfile
 # Helper to disable cache
 def disable_cache(response):
     response['Cache-Control'] = 'no-cache, no-store, must-revalidate'
@@ -14,7 +14,7 @@ def disable_cache(response):
 @never_cache
 @login_required(login_url='/loginpage/')
 def get_commands(request):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated or UserProfile.role != 'employe':
         return redirect('/loginpage/')
     
     commands = Commande.objects.all()
