@@ -5,6 +5,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.apps import apps
 
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+
 
 # Helper to disable caching
 def disable_cache(response):
@@ -114,3 +118,33 @@ def get_rapport_form(request):
         'stocks': stocks,
     })
     return disable_cache(response)
+
+def render_to_pdf(template_src, context_dict={}):
+    template = get_template(template_src)
+    html = template.render(context_dict)
+    response = HttpResponse(content_type='application/pdf')
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Erreur lors de la génération du PDF')
+    return response
+
+def rapport_pdf(request):
+    context = {'nom': 'Yasser', 'produits': ['Article A', 'Article B']}
+    return render_to_pdf('rapport_template.html', context)
+
+def rapport_pdf(request):
+    from django.template.loader import get_template
+    from django.http import HttpResponse
+    from xhtml2pdf import pisa
+
+    rapports = Rapport.objects.all()
+    template = get_template('rapport_pdf.html')
+    html = template.render({'rapports': rapports})
+
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="rapport_stock.pdf"'
+
+    pisa_status = pisa.CreatePDF(html, dest=response)
+    if pisa_status.err:
+        return HttpResponse('Erreur lors de la génération du PDF', status=500)
+    return response
