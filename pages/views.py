@@ -25,7 +25,7 @@ def disable_cache(response):
 @never_cache
 @login_required(login_url='/loginpage/')
 def article_view(request):
-    if not request.user.is_authenticated:
+    if not request.user.is_authenticated :
         return redirect('/loginpage/')
     response = render(request, 'articles.html')
     return disable_cache(response)
@@ -128,3 +128,28 @@ def update_rapport_view(request, pk):
     rapport = get_object_or_404(Rapport, pk=pk)
     response = render(request, 'rapport_form.html', {'rapport': rapport})
     return disable_cache(response)
+
+@never_cache
+@login_required(login_url='/loginpage/')
+def get_stock_form_view(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'stock_form.html')
+    return disable_cache(response)
+
+@never_cache
+@login_required(login_url='/loginpage/')
+def search_article_view(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'searcharticle.html')
+    return disable_cache(response)
+
+@never_cache
+@login_required(login_url='/loginpage/')
+def get_dashboard(request):
+    if not request.user.is_authenticated:
+        return redirect('/loginpage/')
+    response = render(request, 'dashboard.html')
+    return disable_cache(response)
+ 
