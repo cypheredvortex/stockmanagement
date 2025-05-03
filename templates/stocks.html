@@ -1,15 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stocks - Stock Management System</title>
+    <title>Gestion des Stocks</title>
 
-    <!-- Roboto Font & Font Awesome -->
+    <!-- Google Font & Font Awesome -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
 
     <style>
+        /* Global Styles */
         body {
             font-family: "Roboto", sans-serif;
             margin: 0;
@@ -23,6 +24,7 @@
         .dashboard {
             display: flex;
             width: 100%;
+            position: relative;
         }
 
         /* Sidebar */
@@ -75,10 +77,6 @@
             color: #ffffff;
         }
 
-        .logout {
-            color: #f87171 !important;
-        }
-
         /* Content */
         .content {
             margin-left: 270px;
@@ -87,82 +85,142 @@
             background: #f3f4f6;
         }
 
-        .content h2 {
-            font-size: 2em;
-            margin-bottom: 30px;
-            color: #111827;
-        }
-
-        /* Search Bar */
+        /* Search Form Styling */
         .search-container {
             display: flex;
+            align-items: center;
             gap: 10px;
             margin-bottom: 30px;
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
         }
 
         #search-bar {
             flex: 1;
-            padding: 12px 16px;
+            padding: 12px;
             border: 1px solid #d1d5db;
             border-radius: 8px;
             font-size: 1em;
+            background: #f9fafb;
+            color: #1f2937;
         }
 
         #search-btn {
             background: #2563eb;
             color: white;
-            border: none;
             padding: 12px 20px;
+            font-size: 1em;
+            border: none;
             border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: background 0.3s;
         }
 
         #search-btn:hover {
             background: #1d4ed8;
         }
 
-        /* Form Section */
-        .stock-actions form {
-            background: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        .header-container {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 40px;
-            max-width: 500px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header-container h1 {
+            font-size: 2em;
+            margin: 0;
         }
 
-        .stock-actions label {
+        /* Add Stock Button */
+        #add-stock-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #1abc9c;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s ease;
+            font-size: 1.1em;
+        }
+
+        #add-stock-btn:hover {
+            background: #16a085;
+        }
+
+        /* Modal and Overlay */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        #add-stock-form {
+            display: none;
+            width: 400px;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Fade-in Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        #add-stock-form label {
             font-weight: 500;
+            color: #374151;
         }
 
-        .stock-actions input,
-        .stock-actions select {
-            padding: 10px 12px;
+        #add-stock-form input,
+        #add-stock-form select {
+            padding: 12px;
             border: 1px solid #d1d5db;
             border-radius: 8px;
             font-size: 1em;
+            background: #f9fafb;
+            color: #1f2937;
+            margin-bottom: 20px;
         }
 
-        .stock-actions button {
-            background: #10b981;
+        #add-stock-form button {
+            background: #2563eb;
             color: white;
-            border: none;
             padding: 12px;
-            border-radius: 8px;
             font-size: 1em;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: background 0.3s;
         }
 
-        .stock-actions button:hover {
-            background: #059669;
+        #add-stock-form button:hover {
+            background: #1d4ed8;
         }
 
-        /* Table Styles */
+        /* Table Styling */
         .stocks-list table {
             width: 100%;
             border-collapse: collapse;
@@ -193,21 +251,19 @@
             color: #374151;
         }
 
-        .stocks-list a {
+        td a,
+        td button {
             color: #2563eb;
             text-decoration: none;
-            margin-right: 10px;
-        }
-
-        .stocks-list form {
-            display: inline;
-        }
-
-        .stocks-list button {
-            background: transparent;
-            color: #ef4444;
+            font-weight: 500;
+            background: none;
             border: none;
             cursor: pointer;
+        }
+
+        td button:hover,
+        td a:hover {
+            text-decoration: underline;
         }
 
         @media (max-width: 768px) {
@@ -226,68 +282,104 @@
                 flex-direction: column;
             }
         }
-
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- Sidebar Navigation -->
+        <!-- Sidebar -->
         <aside class="sidebar">
-            <h2><a href="{% url 'get_stocks' %}" style="color: inherit; text-decoration: none;">Gestion de Stock</a></h2>
+            <h2><a href="{% url 'get_stocks' %}" style="color: inherit; text-decoration: none;">Gestion des Stocks</a></h2>
             <ul>
+                <li><a href="{% url 'dashboard_view' %}"><i class="fas fa-box"></i> Dashboard</a></li>
                 <li><a href="{% url 'get_stocks' %}"><i class="fas fa-box"></i> Stocks</a></li>
                 <li><a href="{% url 'get_articles' %}"><i class="fas fa-file-alt"></i> Articles</a></li>
                 <li><a href="{% url 'get_rapports' %}"><i class="fas fa-chart-line"></i> Rapports</a></li>
-                <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a></li>
+                <li><a href="{% url 'gethistorique_view' %}"><i class="fas fa-history"></i> Historique</a></li>
+                <li><a href="{% url 'logout_view' %}" class="logout"><i class="fas fa-sign-out-alt"></i> Se Déconnecter</a></li>
             </ul>
         </aside>
 
         <!-- Main Content -->
         <main class="content">
-            <h2>Gestion des Stocks</h2>
-
-            <!-- Search Section -->
-            <div class="search-container">
-                <input type="text" id="search-bar" placeholder="Rechercher un article par référence ou nom">
-                <button id="search-btn">Rechercher</button>
+            <div class="header-container">
+                <h1>Gérer les Stocks</h1>
+                <!-- Add Stock Button -->
+                <button id="add-stock-btn">Ajouter un Nouveau Stock</button>
             </div>
 
-            <!-- Stock Entry/Exit Section -->
-            <div class="stock-actions">
-                <h3>Ajouter un Stock</h3>
-                <form method="post" action="{% url 'create_stock' %}">
-                    {% csrf_token %}
-                    <label for="article">Sélectionner un Article</label>
-                    <select id="article" name="article" required>
-                        <option value="">Choisir un article</option>
-                        {% for article in articles %}
-                            <option value="{{ article.id }}">{{ article.nom }}</option>
-                        {% endfor %}
-                    </select>
+            <!-- Stock Search Form -->
+            <form method="get" action="{% url 'search_stocks' %}" class="search-container">
+                <input type="text" name="query" id="search-bar" placeholder="Rechercher un article par référence ou nom" value="{{ query }}">
+                <button type="submit" id="search-btn">Rechercher</button>
+            </form>
 
-                    <label for="quantite">Quantité</label>
-                    <input type="number" id="quantite" name="quantite" placeholder="Quantité" required>
+            <!-- Article Details (Optional if used in search) -->
+            {% if article %}
+                <div class="card">
+                    <h2>{{ article.nom }}</h2>
+                    <p>Référence : {{ article.references }}</p>
+                    <p>Catégorie : {{ article.categorie }}</p>
+                    <p>Prix : {{ article.prix }} €</p>
+                    <p>Quantité disponible : {{ article.quantite }}</p>
+                </div>
+            {% elif query %}
+                <p>Aucun article trouvé pour "{{ query }}"</p>
+            {% endif %}
 
-                    <label for="seuilAlerte">Seuil d'Alerte</label>
-                    <input type="number" id="seuilAlerte" name="seuilAlerte" placeholder="Seuil d'alerte" required>
+            <!-- Modal and Add Stock Form -->
+            <div id="overlay">
+                <div id="add-stock-form">
+                    <form method="post" action="{% url 'create_stock' %}">
+                        {% csrf_token %}
+                        
+                        <label for="article">Sélectionner un Article</label>
+                        <select id="article" name="article" required>
+                            <option value="">Choisir un article</option>
+                            {% for article in articles %}
+                                <option value="{{ article.id }}">{{ article.nom }}</option>
+                            {% endfor %}
+                        </select>
 
-                    <button type="submit">Ajouter</button>
-                </form>
-                {% if error %}
-                    <p style="color: red;">{{ error }}</p>
-                {% endif %}
+                        <label for="quantite">Quantité</label>
+                        <input type="number" id="quantite" name="quantiteDisponible" placeholder="Quantité" required>
+
+                        <label for="seuilAlerte">Seuil d'Alerte</label>
+                        <input type="number" id="seuilAlerte" name="seuilAlerte" placeholder="Seuil d'Alerte" required>
+
+                        <label for="type">Type de Stock</label>
+                        <select id="type" name="type" required>
+                            <option value="entree">Entrée</option>
+                            <option value="sortie">Sortie</option>
+                        </select>
+
+                        <label for="etatStock">État du Stock</label>
+                        <select id="etatStock" name="etatStock" required>
+                            <option value="hors_alerte">Hors alerte</option>
+                            <option value="en_alerte">En alerte</option>
+                        </select>
+
+                        <label for="date">Date du Mouvement</label>
+                        <input type="date" id="date" name="date" required>
+
+                        <button type="submit">Ajouter</button>
+                    </form>
+                </div>
             </div>
 
             <!-- Stocks List -->
             <div class="stocks-list">
                 <h3>Liste des Stocks</h3>
-                <table id="stocks-table">
+                <table>
                     <thead>
                         <tr>
                             <th>Nom de l'Article</th>
-                            <th>Référence (ID)</th>
+                            <th>ID Article</th>
                             <th>Quantité Disponible</th>
                             <th>Seuil d'Alerte</th>
+                            <th>Type</th>
+                            <th>État</th>
+                            <th>Date</th>
+                            <th>Utilisateur</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -298,21 +390,44 @@
                                 <td>{{ stock.article.id }}</td>
                                 <td>{{ stock.quantiteDisponible }}</td>
                                 <td>{{ stock.seuilAlerte }}</td>
+                                <td>{{ stock.get_type_display }}</td>
+                                <td>{{ stock.get_etatStock_display }}</td>
+                                <td>{{ stock.date|date:"d/m/Y" }}</td>
+                                <td>{{ stock.utilisateur.username }}</td>
                                 <td>
-                                    <a href="{% url 'update_stock_view' stock.id %}">Modifier</a> |
+                                    <a href="{% url 'get_stock_form' %}">Modifier</a> |
                                     <form action="{% url 'delete_stock' stock.id %}" method="post" style="display:inline;">
                                         {% csrf_token %}
-                                        <button type="submit" onclick="return confirm('Supprimer ce stock ?');">Supprimer</button>
+                                        <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce stock ?');">Supprimer</button>
                                     </form>
                                 </td>
                             </tr>
                         {% empty %}
-                            <tr><td colspan="5">Aucun stock disponible.</td></tr>
+                            <tr><td colspan="9">Aucun stock disponible.</td></tr>
                         {% endfor %}
                     </tbody>
                 </table>
             </div>
         </main>
     </div>
+
+    <!-- JavaScript to toggle form visibility and overlay -->
+    <script>
+        document.getElementById('add-stock-btn').addEventListener('click', function () {
+            var form = document.getElementById('add-stock-form');
+            var overlay = document.getElementById('overlay');
+            form.style.display = 'block';
+            overlay.style.display = 'flex';
+        });
+
+        document.getElementById('overlay').addEventListener('click', function (e) {
+            if (e.target === this) {
+                document.getElementById('add-stock-form').style.display = 'none';
+                this.style.display = 'none';
+            }
+        });
+    </script>
 </body>
+
+
 </html>
