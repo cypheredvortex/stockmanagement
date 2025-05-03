@@ -1,7 +1,7 @@
 """
 URL configuration for stockmanagement project.
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+The urlpatterns list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
 Examples:
 Function views
@@ -53,11 +53,15 @@ from stock.views import get_stock_form
 # from pages.views import get_stock_form_view
 from rapport.views import get_rapport_form
 
+from django.urls import path
+
+from rapport.views import rapport_pdf
+
 import debug_toolbar
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('__debug__/', include('debug_toolbar.urls')),
+    path('_debug_/', include('debug_toolbar.urls')),
     path('',home_view,name='home_view'),
     path('articlesview',article_view,name='article_view'),
     path('loginpage/',loginpage_view,name='loginpage_view'),
@@ -94,4 +98,6 @@ urlpatterns = [
     path('listcommands',get_commands,name='get_commands'),
     path('logout/', logout_view, name='logout_view'),
     path('historique',historique_view,name='historique_view'),
+
+    path('rapport/pdf/', rapport_pdf, name='rapport_pdf'),
     ]
