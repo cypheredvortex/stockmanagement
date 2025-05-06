@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from .models import UserProfile
 
+
 # Optional: Inline to show/edit role on the User admin page
 class UserProfileInline(admin.StackedInline):
     model = UserProfile
